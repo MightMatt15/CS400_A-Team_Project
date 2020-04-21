@@ -1,4 +1,4 @@
-package cs400ATeamFinalProject;
+package application;
 
 public class FileManager {
 

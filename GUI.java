@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,9 +16,13 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -37,11 +42,17 @@ public class GUI extends Application {
 
 		BorderPane panel = new BorderPane();
 
+	     //change the background color
+        Background background = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
+        panel.setBackground(background);
+        
+        //title on the dashboard
 		Label title = new Label("Milk Production Dashboard\n   -- Chalet Cheese Factory");
 		title.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
 		panel.setTop(title);
 		BorderPane.setAlignment(title, Pos.CENTER);
 
+	      //create the input boxes on the left
 		VBox selectionPanel = new VBox();
 		Label selection = createLabel("Filters", "Chalkduster", FontWeight.BOLD, 20);
 		Label year = createLabel("Year", "Times New Roman", FontWeight.BOLD, 15);
@@ -53,8 +64,10 @@ public class GUI extends Application {
 		Label farm = createLabel("Farm", "Times New Roman", FontWeight.BOLD, 15);
 		TextField farmInput = new TextField();
 
+	      //new button to search
 		Button search = new Button("SEARCH");
 
+	      //add the text fields to the V box on the left
 		selectionPanel.getChildren().add(selection);
 		selectionPanel.getChildren().add(year);
 		selectionPanel.getChildren().add(yearInput);
@@ -92,6 +105,8 @@ public class GUI extends Application {
 		results.setAlignment(Pos.TOP_LEFT);
 		panel.setCenter(resultsPanel);
 
+		
+	    //set the main scene
 		Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
 		// Add the stuff and set the primary stage
 		primaryStage.setScene(mainScene);
