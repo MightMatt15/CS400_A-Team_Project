@@ -138,17 +138,32 @@ public class GUI extends Application {
 		
         //create input fields to output files
 		VBox outputTypes = new VBox();
-		outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
-		outputTypes.getChildren().add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Farm ID, Year"));
-		outputTypes.getChildren().add(createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Year"));
-		outputTypes.getChildren().add(createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Year, Month"));
-		outputTypes.getChildren().add(createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Start date, End Date: year-month-day, month-day"));
+		Label outputLabel = createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20);
+		Label farmLabel = createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15);
+		TextField farmTextField = new TextField("Farm ID, Year");
+		Label annualLabel = createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15);
+		TextField annualTextField = new TextField("Year");
+		Label monthlyLabel = createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15);
+		TextField monthlyTextField = new TextField("Year, Month");
+		Label rangeLabel = createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15);
+		TextField rangeTextField = new TextField("Start date, End Date: year-month-day, month-day");
+		outputTypes.getChildren().add(outputLabel);
+		outputTypes.getChildren().add(farmLabel);
+		outputTypes.getChildren().add(farmTextField);
+		outputTypes.getChildren().add(annualLabel);
+		outputTypes.getChildren().add(annualTextField);
+		outputTypes.getChildren().add(monthlyLabel);
+		outputTypes.getChildren().add(monthlyTextField);
+		outputTypes.getChildren().add(rangeLabel);
+		outputTypes.getChildren().add(rangeTextField);
         panel2.setCenter(outputTypes);
         BorderPane.setAlignment(panel2, Pos.CENTER);
+        
+        //set the actions for all of the textfields
+        //FileManager fileManager = new FileManager();
+        //farmTextField.setOnAction(e -> fileManager.writeToFile(farmTextField.getText()));
+        //also need to check if the write to the file was successful and print an error if it was 
+        
         
 		//page for outputs
 		Scene secondaryScene = new Scene(panel2, WINDOW_WIDTH, WINDOW_HEIGHT);
