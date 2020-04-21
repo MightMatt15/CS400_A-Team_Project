@@ -1,4 +1,5 @@
 # CS400_A-Team_Project
+Ateam 103
 Course: cs400
 Semester: Spring 2020
 Project name: Milk Weight
