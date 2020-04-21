@@ -32,8 +32,8 @@ public class GUI extends Application {
 	// NOTE: this.getParameters().getRaw() will get these also
 	private List<String> args;
 
-	private static final int WINDOW_WIDTH = 300;
-	private static final int WINDOW_HEIGHT = 200;
+	private static final int WINDOW_WIDTH = 600;
+	private static final int WINDOW_HEIGHT = 400;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -104,10 +104,60 @@ public class GUI extends Application {
 		resultsPanel.getChildren().add(results);
 		results.setAlignment(Pos.TOP_LEFT);
 		panel.setCenter(resultsPanel);
+		
+		//button to go to next scene
+		Button nextScene = new Button("Output a file");
+		panel.setRight(nextScene);
+        BorderPane.setAlignment(nextScene, Pos.BOTTOM_RIGHT);
 
 		
 	    //set the main scene
 		Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
+		
+		
+		
+		//secondary scene
+		
+	    BorderPane panel2 = new BorderPane();
+
+		//change the background color
+        Background background2 = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
+        panel2.setBackground(background2);
+        
+        //title on the dashboard
+        Label title2 = new Label("Milk Production Output\n   -- Chalet Cheese Factory");
+        title2.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
+        panel2.setTop(title2);
+        BorderPane.setAlignment(title2, Pos.CENTER);
+		
+        //button to go to dashboard
+        Button dashboard = new Button("Go to Dashboard");
+        panel2.setRight(dashboard);
+        BorderPane.setAlignment(dashboard, Pos.BOTTOM_RIGHT);
+		
+        //create input fields to output files
+		VBox outputTypes = new VBox();
+		outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
+		outputTypes.getChildren().add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Farm ID, Year"));
+		outputTypes.getChildren().add(createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Year"));
+		outputTypes.getChildren().add(createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Year, Month"));
+		outputTypes.getChildren().add(createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Start date, End Date: year-month-day, month-day"));
+        panel2.setCenter(outputTypes);
+        BorderPane.setAlignment(panel2, Pos.CENTER);
+        
+		//page for outputs
+		Scene secondaryScene = new Scene(panel2, WINDOW_WIDTH, WINDOW_HEIGHT);
+		//make the buttons switch between scenes
+	    nextScene.setOnAction(e -> {primaryStage.setScene(secondaryScene);primaryStage.show();});
+        dashboard.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
+
+		
+		
 		// Add the stuff and set the primary stage
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
