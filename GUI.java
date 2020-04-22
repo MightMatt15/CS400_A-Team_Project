@@ -83,6 +83,7 @@ public class GUI extends Application {
 		selectionPanel.getChildren().add(search);
 		panel.setLeft(selectionPanel);
 
+		//add a section for showing total, max, min, avg, and percentages
 		VBox resultsPanel = new VBox();
 		GridPane results = new GridPane();
 		results.add(createLabel("Total:	", "Times New Roman", FontWeight.BOLD, 15), 0, 0);
@@ -127,8 +128,10 @@ public class GUI extends Application {
 		
 		//secondary scene
 		
+		//output file scene
 	    BorderPane panel2 = new BorderPane();
 	    
+	    //input file scene
 	    BorderPane panel3 = new BorderPane();
 	    Background background3 = new Background(new BackgroundFill(Color.AZURE, CornerRadii.EMPTY, Insets.EMPTY));
 	    Label title3 = new Label("Milk Production Input\n  -- Chalet Cheese Factory");
@@ -151,6 +154,7 @@ public class GUI extends Application {
         panel2.setRight(dashboard);
         BorderPane.setAlignment(dashboard, Pos.BOTTOM_RIGHT);
         
+        //button to go back to dashboard from the input scene
         Button dashboard1 = new Button("Go to Dashboard");
         panel3.setRight(dashboard1);
         BorderPane.setAlignment(dashboard1, Pos.BOTTOM_RIGHT);
