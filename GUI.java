@@ -66,6 +66,9 @@ public class GUI extends Application {
 
 	      //new button to search
 		Button search = new Button("SEARCH");
+		
+		
+		
 
 	      //add the text fields to the V box on the left
 		selectionPanel.getChildren().add(selection);
@@ -105,11 +108,16 @@ public class GUI extends Application {
 		results.setAlignment(Pos.TOP_LEFT);
 		panel.setCenter(resultsPanel);
 		
+		Button inputFile = new Button("Input a file");
+        panel.setBottom(inputFile);
+        BorderPane.setAlignment(inputFile, Pos.BOTTOM_LEFT);
+		
 		//button to go to next scene
 		Button nextScene = new Button("Output a file");
 		panel.setRight(nextScene);
         BorderPane.setAlignment(nextScene, Pos.BOTTOM_RIGHT);
-
+        
+        
 		
 	    //set the main scene
 		Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -120,6 +128,13 @@ public class GUI extends Application {
 		//secondary scene
 		
 	    BorderPane panel2 = new BorderPane();
+	    
+	    BorderPane panel3 = new BorderPane();
+	    Background background3 = new Background(new BackgroundFill(Color.AZURE, CornerRadii.EMPTY, Insets.EMPTY));
+	    Label title3 = new Label("Milk Production Input\n  -- Chalet Cheese Factory");
+	    title3.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
+	    panel3.setTop(title3);
+	    BorderPane.setAlignment(title3, Pos.CENTER);
 
 		//change the background color
         Background background2 = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
@@ -135,42 +150,39 @@ public class GUI extends Application {
         Button dashboard = new Button("Go to Dashboard");
         panel2.setRight(dashboard);
         BorderPane.setAlignment(dashboard, Pos.BOTTOM_RIGHT);
+        
+        Button dashboard1 = new Button("Go to Dashboard");
+        panel3.setRight(dashboard1);
+        BorderPane.setAlignment(dashboard1, Pos.BOTTOM_RIGHT);
+        VBox input = new VBox();
+        input.getChildren().add(createLabel("Please input file location Below", "Chalkduster", FontWeight.BOLD, 20));
+        input.getChildren().add(new TextField("Ex C:/users/myUser/file.txt"));
+        panel3.setCenter(input);
+        BorderPane.setAlignment(panel3, Pos.CENTER);
 		
         //create input fields to output files
 		VBox outputTypes = new VBox();
-		Label outputLabel = createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20);
-		Label farmLabel = createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15);
-		TextField farmTextField = new TextField("Farm ID, Year");
-		Label annualLabel = createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15);
-		TextField annualTextField = new TextField("Year");
-		Label monthlyLabel = createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15);
-		TextField monthlyTextField = new TextField("Year, Month");
-		Label rangeLabel = createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15);
-		TextField rangeTextField = new TextField("Start date, End Date: year-month-day, month-day");
-		outputTypes.getChildren().add(outputLabel);
-		outputTypes.getChildren().add(farmLabel);
-		outputTypes.getChildren().add(farmTextField);
-		outputTypes.getChildren().add(annualLabel);
-		outputTypes.getChildren().add(annualTextField);
-		outputTypes.getChildren().add(monthlyLabel);
-		outputTypes.getChildren().add(monthlyTextField);
-		outputTypes.getChildren().add(rangeLabel);
-		outputTypes.getChildren().add(rangeTextField);
+		outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
+		outputTypes.getChildren().add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Farm ID, Year"));
+		outputTypes.getChildren().add(createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Year"));
+		outputTypes.getChildren().add(createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Year, Month"));
+		outputTypes.getChildren().add(createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Start date, End Date: year-month-day, month-day"));
         panel2.setCenter(outputTypes);
         BorderPane.setAlignment(panel2, Pos.CENTER);
         
-        //set the actions for all of the textfields
-        //FileManager fileManager = new FileManager();
-        //farmTextField.setOnAction(e -> fileManager.writeToFile(farmTextField.getText()));
-        //also need to check if the write to the file was successful and print an error if it was 
-        
-        
 		//page for outputs
 		Scene secondaryScene = new Scene(panel2, WINDOW_WIDTH, WINDOW_HEIGHT);
+		//page for inputs
+		Scene inputScene = new Scene(panel3, WINDOW_WIDTH, WINDOW_HEIGHT);
 		//make the buttons switch between scenes
 	    nextScene.setOnAction(e -> {primaryStage.setScene(secondaryScene);primaryStage.show();});
         dashboard.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
-
+        inputFile.setOnAction(e -> {primaryStage.setScene(inputScene);primaryStage.show();});
+        dashboard1.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
 		
 		
 		// Add the stuff and set the primary stage
