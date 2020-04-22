@@ -14,6 +14,4 @@ Team Members:
 Which team members were on same xteam together?
 	Matt McNaught & Adam Pryor x-team 166
 Other notes or comments to the grader:
-	Button in bottom right goes to the page for options for outputting to a 	file
-[place any comments or notes that will help the grader here]
->>>>>>> 51e2f848f3c1a803aaaeeb22487d23eb366b0467
+	Button in bottom right goes to the page for options for outputting to a file
