@@ -9,6 +9,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -160,7 +162,8 @@ public class GUI extends Application {
         BorderPane.setAlignment(dashboard1, Pos.BOTTOM_RIGHT);
         VBox input = new VBox();
         input.getChildren().add(createLabel("Please input file location Below", "Chalkduster", FontWeight.BOLD, 20));
-        input.getChildren().add(new TextField("Ex C:/users/myUser/file.txt"));
+        TextField inputTextField = new TextField("Ex C:/users/myUser/file.txt");
+        input.getChildren().add(inputTextField);
         panel3.setCenter(input);
         BorderPane.setAlignment(panel3, Pos.CENTER);
 		
@@ -188,6 +191,12 @@ public class GUI extends Application {
         inputFile.setOnAction(e -> {primaryStage.setScene(inputScene);primaryStage.show();});
         dashboard1.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
 		
+        //load the input file entered
+        FileManager fileManager = new FileManager();
+        inputTextField.setOnAction(e -> {fileManager.inputFile = inputTextField.getText();if(fileManager.readFile()) {
+          Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
+          alert.showAndWait();}});
+        
 		
 		// Add the stuff and set the primary stage
 		primaryStage.setScene(mainScene);
