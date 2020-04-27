@@ -67,7 +67,7 @@ public class Farm {
       //maybe start by adding a year if it is found in the file and init to 0
       //then check if year exists and check if day is nonzero??
       //could use a method to find the day in the tree and edit it?
-      
+      Data data = new Data();
       milkData.insert(farmID, data);
     } catch (IllegalNullKeyException e) {
       return false;
