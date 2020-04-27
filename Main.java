@@ -2,6 +2,8 @@ package application;
 
 import javafx.stage.Stage;
 
+
+
 public class Main {
 
   
@@ -12,7 +14,7 @@ public class Main {
     try {
       gui.start(new Stage());
     } catch (Exception e) {
-      // TODO Auto-generated catch block
+      System.out.println("GUI failed to start");
     }
     
   }

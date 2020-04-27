@@ -36,6 +36,12 @@ public class GUI extends Application {
 
 	private static final int WINDOW_WIDTH = 600;
 	private static final int WINDOW_HEIGHT = 400;
+	//read and write the files
+    FileManager fileManager = new FileManager();
+    //manage data provided in files for visualization and manipulation
+    DataManager dataManager = new DataManager();
+    //factory to store all farms
+    CheeseFactory cheeseFactory = new CheeseFactory("Cheese Factory");
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -191,11 +197,16 @@ public class GUI extends Application {
         inputFile.setOnAction(e -> {primaryStage.setScene(inputScene);primaryStage.show();});
         dashboard1.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
 		
-        //load the input file entered
-        FileManager fileManager = new FileManager();
-        inputTextField.setOnAction(e -> {fileManager.inputFile = inputTextField.getText();if(fileManager.readFile()) {
-          Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
-          alert.showAndWait();}});
+        
+        inputTextField.setOnAction(e -> {fileManager.inputFile = inputTextField.getText();
+          if(fileManager.readFile()) {
+            Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
+            alert.showAndWait();
+          }else {
+            Alert alert = new Alert(AlertType.ERROR, "Input file was unable to be loaded");
+            alert.showAndWait();
+          }
+          });
         
 		
 		// Add the stuff and set the primary stage

@@ -1,6 +1,6 @@
 package application;
 
-public class FileManager {
+public class FileManager extends GUI{
 
   public String inputFile;
   public String outputFile;
