@@ -23,6 +23,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -41,7 +44,7 @@ public class GUI extends Application {
     //manage data provided in files for visualization and manipulation
     DataManager dataManager = new DataManager();
     //factory to store all farms
-    CheeseFactory cheeseFactory = new CheeseFactory("Cheese Factory");
+    CheeseFactory cheeseFactory = new CheeseFactory();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -117,16 +120,29 @@ public class GUI extends Application {
 		results.setAlignment(Pos.TOP_LEFT);
 		panel.setCenter(resultsPanel);
 		
+		
+		//create the boxes to hold the buttons in each corner on the bottom of the dashboard
+		HBox bottomBox = new HBox();
+	    HBox leftBox = new HBox();
+	    HBox.setHgrow(leftBox, Priority.ALWAYS);
+	    HBox rightBox = new HBox();
+	    HBox.setHgrow(rightBox, Priority.ALWAYS);
+		
+	    //input choice screen
 		Button inputFile = new Button("Input a file");
-        panel.setBottom(inputFile);
         BorderPane.setAlignment(inputFile, Pos.BOTTOM_LEFT);
 		
 		//button to go to next scene
 		Button nextScene = new Button("Output a file");
-		panel.setRight(nextScene);
         BorderPane.setAlignment(nextScene, Pos.BOTTOM_RIGHT);
         
-        
+        //add the boxes with the buttons
+        leftBox.getChildren().add(inputFile);
+        rightBox.getChildren().add(nextScene);
+        leftBox.setAlignment(Pos.CENTER_LEFT);
+        rightBox.setAlignment(Pos.CENTER_RIGHT);
+        bottomBox.getChildren().addAll(leftBox, rightBox);
+        panel.setBottom(bottomBox);
 		
 	    //set the main scene
 		Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -141,7 +157,8 @@ public class GUI extends Application {
 	    
 	    //input file scene
 	    BorderPane panel3 = new BorderPane();
-	    Background background3 = new Background(new BackgroundFill(Color.AZURE, CornerRadii.EMPTY, Insets.EMPTY));
+	    Background background3 = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
+	    panel3.setBackground(background3);
 	    Label title3 = new Label("Milk Production Input\n  -- Chalet Cheese Factory");
 	    title3.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
 	    panel3.setTop(title3);
@@ -198,6 +215,7 @@ public class GUI extends Application {
         dashboard1.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
 		
         
+        //read the input file when a user types in a filename
         inputTextField.setOnAction(e -> {fileManager.inputFile = inputTextField.getText();
           if(fileManager.readFile()) {
             Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
