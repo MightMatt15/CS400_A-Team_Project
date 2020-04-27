@@ -34,107 +34,152 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
-    // store any command-line arguments that were entered.
-    // NOTE: this.getParameters().getRaw() will get these also
-    private List<String> args;
+	// store any command-line arguments that were entered.
+	// NOTE: this.getParameters().getRaw() will get these also
+	private List<String> args;
 
-    private static final int WINDOW_WIDTH = 600;
-    private static final int WINDOW_HEIGHT = 400;
-    //read and write the files
+	private static final int WINDOW_WIDTH = 600;
+	private static final int WINDOW_HEIGHT = 400;
+	//read and write the files
     FileManager fileManager = new FileManager();
     //manage data provided in files for visualization and manipulation
     DataManager dataManager = new DataManager();
     //factory to store all farms
     CheeseFactory cheeseFactory = new CheeseFactory();
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        // save args example
-        // args = this.getParameters().getRaw();
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// save args example
+		// args = this.getParameters().getRaw();
 
-        BorderPane panel = new BorderPane();
+		BorderPane panel = new BorderPane();
 
-         //change the background color
+	     //change the background color
         Background background = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
         panel.setBackground(background);
         
         //title on the dashboard
-        Label title = new Label("Milk Production Dashboard\n   -- Chalet Cheese Factory");
-        title.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
-        panel.setTop(title);
-        BorderPane.setAlignment(title, Pos.CENTER);
+		Label title = new Label("Milk Production Dashboard\n   -- Chalet Cheese Factory");
+		title.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
+		panel.setTop(title);
+		BorderPane.setAlignment(title, Pos.CENTER);
 
-          //create the input boxes on the left
-        VBox selectionPanel = new VBox();
-        Label selection = createLabel("Filters", "Chalkduster", FontWeight.BOLD, 20);
-        Label year = createLabel("Year", "Times New Roman", FontWeight.BOLD, 15);
-        TextField yearInput = new TextField();
-        Label month = createLabel("Month", "Times New Roman", FontWeight.BOLD, 15);
-        TextField monthInput = new TextField();
-        Label day = createLabel("Day", "Times New Roman", FontWeight.BOLD, 15);
-        TextField dayInput = new TextField();
-        Label farm = createLabel("Farm", "Times New Roman", FontWeight.BOLD, 15);
-        TextField farmInput = new TextField();
+	      //create the input boxes on the left
+		VBox selectionPanel = new VBox();
+		Label selection = createLabel("Filters", "Chalkduster", FontWeight.BOLD, 20);
+		Label year = createLabel("Year", "Times New Roman", FontWeight.BOLD, 15);
+		TextField yearInput = new TextField("Enter Year:");
+		Label month = createLabel("Month", "Times New Roman", FontWeight.BOLD, 15);
+		TextField monthInput = new TextField("Enter Month Number:");
+		Label day = createLabel("Day", "Times New Roman", FontWeight.BOLD, 15);
+		TextField dayInput = new TextField("Enter Day Number:");
+		Label farm = createLabel("Farm", "Times New Roman", FontWeight.BOLD, 15);
+		TextField farmInput = new TextField("Enter farm ID:");
 
-          //new button to search
-        Button search = new Button("SEARCH");
-        
-        
-        
+	      //new button to search
+		Button search = new Button("SEARCH");
+		
+		
+		
 
-          //add the text fields to the V box on the left
-        selectionPanel.getChildren().add(selection);
-        selectionPanel.getChildren().add(year);
-        selectionPanel.getChildren().add(yearInput);
-        selectionPanel.getChildren().add(month);
-        selectionPanel.getChildren().add(monthInput);
-        selectionPanel.getChildren().add(day);
-        selectionPanel.getChildren().add(dayInput);
-        selectionPanel.getChildren().add(farm);
-        selectionPanel.getChildren().add(farmInput);
-        selectionPanel.getChildren().add(search);
-        panel.setLeft(selectionPanel);
+	      //add the text fields to the V box on the left
+		selectionPanel.getChildren().add(selection);
+		selectionPanel.getChildren().add(year);
+		selectionPanel.getChildren().add(yearInput);
+		selectionPanel.getChildren().add(month);
+		selectionPanel.getChildren().add(monthInput);
+		selectionPanel.getChildren().add(day);
+		selectionPanel.getChildren().add(dayInput);
+		selectionPanel.getChildren().add(farm);
+		selectionPanel.getChildren().add(farmInput);
+		selectionPanel.getChildren().add(search);
+		panel.setLeft(selectionPanel);
+		
+		
+		search.setOnAction(event -> {//show weight for that day?
+		  selectionPanel.getChildren().add(createLabel( "Farm "+ farmInput.getText() + "'s data for that day: " + "the data"  , "Times New Roman", FontWeight.BOLD, 15));});
+		
 
-        //add a section for showing total, max, min, avg, and percentages
-        VBox resultsPanel = new VBox();
-        GridPane results = new GridPane();
-        results.add(createLabel("Total: ", "Times New Roman", FontWeight.BOLD, 15), 0, 0);
-        results.add(createLabel("Maximum:   ", "Times New Roman", FontWeight.BOLD, 15), 0,
-                1);
-        results.add(createLabel("Minimum:   ", "Times New Roman", FontWeight.BOLD, 15), 0,
-                2);
-        results.add(createLabel("Average:   ", "Times New Roman", FontWeight.BOLD, 15), 0,
-                3);
-        results.add(
-                createLabel("Percentage:    ", "Times New Roman", FontWeight.BOLD, 15), 0,
-                4);
-        for (int i = 0; i < 6; i++)
-            results.add(new TextField(), 1, i);
-        results.add(new TextField("e.g: farm 01"), 2, 2);
-        results.add(new TextField("e.g: farm 02"), 2, 3);
-        results.add(new Label("(out of all farms)"), 2, 4);
-        results.add(new Label("(out of the whole time period)"), 2, 5);
+		//add a section for showing total, max, min, avg, and percentages
+		VBox resultsPanel = new VBox();
+		GridPane results = new GridPane();
+		//results.add(createLabel("Total:	", "Times New Roman", FontWeight.BOLD, 15), 0, 0);
+		results.add(createLabel("Maximum By Month:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+				0);
+		results.add(createLabel("Maximum All Farms: ", "Times New Roman", FontWeight.BOLD, 15), 0,
+            1);
+		results.add(createLabel("Minimum By Month:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+				2);
+		results.add(createLabel("Minimum All Farms:    ", "Times New Roman", FontWeight.BOLD, 15), 0,
+            3);
+		results.add(createLabel("Average By Month:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+				4);
+		results.add(createLabel("Average All Farms: ", "Times New Roman", FontWeight.BOLD, 15), 0,
+            5);
+		results.add(
+				createLabel("Percentage:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+				6);
+		results.add(
+            createLabel("Percentage For Month:", "Times New Roman", FontWeight.BOLD, 15), 0,
+            7);
+		results.add(
+            createLabel("Percentage For Year:", "Times New Roman", FontWeight.BOLD, 15), 0,
+            8);
+		
+		TextField maxMonthTF = new TextField("Enter farmID,year:");
+	    TextField maxAllFarmsTF = new TextField("Enter month,year:");
+	    TextField minMonthTF = new TextField("Enter farmID,year:");
+	    TextField minAllFarmsTF = new TextField("Enter month,year:");
+	    TextField avgMonthTF = new TextField("Enter farmID,year:");
+	    TextField avgAllFarmsTF = new TextField("Enter month,year:");
+        TextField pctgMonth = new TextField("Enter Month:");
+        TextField pctgYear = new TextField("Enter Year:");
+	    Button pctgTotal = new Button("Farms' Percentage of Total");
 
-        resultsPanel.getChildren()
-                .add(createLabel("Results", "Chalkduster", FontWeight.BOLD, 20));
-        resultsPanel.getChildren().add(results);
-        results.setAlignment(Pos.TOP_LEFT);
-        panel.setCenter(resultsPanel);
-        
-        
-        //create the boxes to hold the buttons in each corner on the bottom of the dashboard
-        HBox bottomBox = new HBox();
-        HBox leftBox = new HBox();
-        HBox.setHgrow(leftBox, Priority.ALWAYS);
-        HBox rightBox = new HBox();
-        HBox.setHgrow(rightBox, Priority.ALWAYS);
-        
-        //input choice screen
-        Button inputFile = new Button("Input a file");
+		
+		results.add(maxMonthTF, 1, 0);
+	    results.add(maxAllFarmsTF, 1, 1);
+	    results.add(minMonthTF, 1, 2);
+	    results.add(minAllFarmsTF, 1, 3);
+	    results.add(avgMonthTF, 1, 4);
+	    results.add(avgAllFarmsTF, 1, 5);
+	    results.add(pctgMonth, 1, 6);
+	    results.add(pctgYear, 1, 7);
+	    results.add(pctgTotal, 1, 8);
+
+	       
+
+		resultsPanel.getChildren()
+				.add(createLabel("Results", "Chalkduster", FontWeight.BOLD, 20));
+		resultsPanel.getChildren().add(results);
+		results.setAlignment(Pos.TOP_LEFT);
+		panel.setCenter(resultsPanel);
+		
+		//results screen
+		BorderPane panelResults = new BorderPane();
+		
+		
+		
+		
+		
+		
+		Scene resultsScene = new Scene(panelResults, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
+		
+		
+		//create the boxes to hold the buttons in each corner on the bottom of the dashboard
+		HBox bottomBox = new HBox();
+	    HBox leftBox = new HBox();
+	    HBox.setHgrow(leftBox, Priority.ALWAYS);
+	    HBox rightBox = new HBox();
+	    HBox.setHgrow(rightBox, Priority.ALWAYS);
+		
+	    //input choice screen
+		Button inputFile = new Button("Input a file");
         BorderPane.setAlignment(inputFile, Pos.BOTTOM_LEFT);
-        
-        //button to go to next scene
-        Button nextScene = new Button("Output a file");
+		
+		//button to go to next scene
+		Button nextScene = new Button("Output a file");
         BorderPane.setAlignment(nextScene, Pos.BOTTOM_RIGHT);
         
         //add the boxes with the buttons
@@ -144,28 +189,28 @@ public class GUI extends Application {
         rightBox.setAlignment(Pos.CENTER_RIGHT);
         bottomBox.getChildren().addAll(leftBox, rightBox);
         panel.setBottom(bottomBox);
-        
-        //set the main scene
-        Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
-        
-        
-        
-        
-        //secondary scene
-        
-        //output file scene
-        BorderPane panel2 = new BorderPane();
-        
-        //input file scene
-        BorderPane panel3 = new BorderPane();
-        Background background3 = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
-        panel3.setBackground(background3);
-        Label title3 = new Label("Milk Production Input\n  -- Chalet Cheese Factory");
-        title3.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
-        panel3.setTop(title3);
-        BorderPane.setAlignment(title3, Pos.CENTER);
+		
+	    //set the main scene
+		Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
+		
+		
+		
+		//secondary scene
+		
+		//output file scene
+	    BorderPane panel2 = new BorderPane();
+	    
+	    //input file scene
+	    BorderPane panel3 = new BorderPane();
+	    Background background3 = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
+	    panel3.setBackground(background3);
+	    Label title3 = new Label("Milk Production Input\n  -- Chalet Cheese Factory");
+	    title3.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
+	    panel3.setTop(title3);
+	    BorderPane.setAlignment(title3, Pos.CENTER);
 
-        //change the background color
+		//change the background color
         Background background2 = new Background(new BackgroundFill(Color.CADETBLUE, CornerRadii.EMPTY, Insets.EMPTY));
         panel2.setBackground(background2);
         
@@ -174,7 +219,7 @@ public class GUI extends Application {
         title2.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
         panel2.setTop(title2);
         BorderPane.setAlignment(title2, Pos.CENTER);
-        
+		
         //button to go to dashboard
         Button dashboard = new Button("Go to Dashboard");
         panel2.setRight(dashboard);
@@ -188,39 +233,38 @@ public class GUI extends Application {
         input.getChildren().add(createLabel("Please input file location Below", "Chalkduster", FontWeight.BOLD, 20));
         TextField inputTextField = new TextField("Ex C:/users/myUser/file.txt");
         input.getChildren().add(inputTextField);
-        panel3.setCenter(input);        
+        panel3.setCenter(input);
         BorderPane.setAlignment(panel3, Pos.CENTER);
-        
-        
+		
         //create input fields to output files
-        VBox outputTypes = new VBox();
-        outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
-        outputTypes.getChildren().add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
-        outputTypes.getChildren().add(new TextField("Farm ID, Year"));
-        outputTypes.getChildren().add(createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
-        outputTypes.getChildren().add(new TextField("Year"));
-        outputTypes.getChildren().add(createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
-        outputTypes.getChildren().add(new TextField("Year, Month"));
-        outputTypes.getChildren().add(createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
-        outputTypes.getChildren().add(new TextField("Start date, End Date: year-month-day, month-day"));
+		VBox outputTypes = new VBox();
+		outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
+		outputTypes.getChildren().add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Farm ID, Year   e.g. 02, 2019"));
+		outputTypes.getChildren().add(createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Year   e.g. 2019"));
+		outputTypes.getChildren().add(createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Year, Month   e.g. 2019, 2"));
+		outputTypes.getChildren().add(createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
+		outputTypes.getChildren().add(new TextField("Start date, End Date:   year,month,day, month,day"));
         panel2.setCenter(outputTypes);
         BorderPane.setAlignment(panel2, Pos.CENTER);
         
-        //page for outputs
-        Scene secondaryScene = new Scene(panel2, WINDOW_WIDTH, WINDOW_HEIGHT);
-        //page for inputs
-        Scene inputScene = new Scene(panel3, WINDOW_WIDTH, WINDOW_HEIGHT);
-        //make the buttons switch between scenes
-        nextScene.setOnAction(e -> {primaryStage.setScene(secondaryScene);primaryStage.show();});
+		//page for outputs
+		Scene secondaryScene = new Scene(panel2, WINDOW_WIDTH, WINDOW_HEIGHT);
+		//page for inputs
+		Scene inputScene = new Scene(panel3, WINDOW_WIDTH, WINDOW_HEIGHT);
+		//make the buttons switch between scenes
+	    nextScene.setOnAction(e -> {primaryStage.setScene(secondaryScene);primaryStage.show();});
         dashboard.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
         inputFile.setOnAction(e -> {primaryStage.setScene(inputScene);primaryStage.show();});
         dashboard1.setOnAction(e -> {primaryStage.setScene(mainScene);primaryStage.show();});
-        
+		
         
         //read the input file when a user types in a filename
-        inputTextField.setOnAction(e -> {fileManager.inputFile = inputTextField.getText();
+        inputTextField.setOnAction(e -> {
           try {
-            if(FileManager.readFile(inputTextField.getText())) {
+            if(fileManager.readFile(inputTextField.getText())) {
               Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
               alert.showAndWait();
             }else {
@@ -228,36 +272,39 @@ public class GUI extends Application {
               alert.showAndWait();
             }
           } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            Alert alert = new Alert(AlertType.ERROR, "Input file was unable to be loaded");
+            alert.showAndWait();
           }
           });
         
-        
-        // Add the stuff and set the primary stage
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
-    }
+		
+		// Add the stuff and set the primary stage
+		primaryStage.setScene(mainScene);
+		primaryStage.show();
+	}
 
-    /**
-     * Create a label with specified font, font weight and size.
-     * 
-     * @param label  content of the label
-     * @param font   font
-     * @param weight font weight
-     * @param size   size of font
-     * @return a Label reference
-     */
-    private Label createLabel(String label, String font, FontWeight weight, int size) {
-        Label newLabel = new Label(label);
-        newLabel.setFont(Font.font(font, weight, size));
-        return newLabel;
-    }
+	
+	
+	
+	/**
+	 * Create a label with specified font, font weight and size.
+	 * 
+	 * @param label  content of the label
+	 * @param font   font
+	 * @param weight font weight
+	 * @param size   size of font
+	 * @return a Label reference
+	 */
+	private Label createLabel(String label, String font, FontWeight weight, int size) {
+		Label newLabel = new Label(label);
+		newLabel.setFont(Font.font(font, weight, size));
+		return newLabel;
+	}
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
