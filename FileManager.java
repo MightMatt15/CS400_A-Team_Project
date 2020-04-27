@@ -79,27 +79,56 @@ public class FileManager{
           int weight = 0;
           StringBuilder myBuilder = new StringBuilder();
           myBuilder.append(currentLine);          
+          try {
           year = Integer.parseInt(myBuilder.substring(0, 4));
+          }
+          catch(Exception e) {
+            year = 0;
+          }
           myBuilder.delete(0, 5);
           if(myBuilder.substring(0, 2).contains("-")) {            
-            month = getMonth(Integer.parseInt(myBuilder.substring(0,1)));
-            myBuilder.delete(0, 2);
+            try {
+              month = getMonth(Integer.parseInt(myBuilder.substring(0,1)));
+              myBuilder.delete(0, 2);
+              }catch(Exception e) {
+                month = "ERROR";
+              }
           }else {
+            try {
             month = getMonth(Integer.parseInt(myBuilder.substring(0,2)));
             myBuilder.delete(0, 3);
+            }catch(Exception e) {
+              month = "ERROR";
+            }
+            
           }
-          if(myBuilder.substring(0, 2).contains(",")) {            
+          if(myBuilder.substring(0, 2).contains(",")) {   
+            try {        
             day = Integer.parseInt(myBuilder.substring(0,1));
             myBuilder.delete(0, 2);
+            }catch(Exception e) {
+              day = 0;
+            }
           }else {
+            try {
             day = Integer.parseInt(myBuilder.substring(0,2));
             myBuilder.delete(0, 3);
+            }
+            catch(Exception e) {
+              day = 0;
+            }
           }
           
           farmNumber = myBuilder.substring(0, myBuilder.indexOf(","));
           myBuilder.delete(0, myBuilder.indexOf(",") + 1);
+          try {
           weight = Integer.parseInt(myBuilder.toString());
+          }
+          catch (Exception e) {
+            weight = 0;
+          }
           myFactory.insertSingleData(farmNumber, year, month, day, weight);
+          System.out.println("Year: " + year + "Month: " + "Day: " + day + "Farm Number " + farmNumber + "Weight: " + weight);
           }
         
           
