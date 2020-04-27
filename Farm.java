@@ -2,9 +2,14 @@ package application;
 
 import java.util.ArrayList;
 
+/**
+ * This class stores the milk weight data of a farm and manages users' requests
+ * for the data.
+ *
+ */
 public class Farm {
 	private String farmID; // farm ID can be any string
-	private String owner;
+	// private String owner;
 	private ArrayList<annualData> yearList;
 
 	/**
@@ -15,7 +20,7 @@ public class Farm {
 	 */
 	public Farm(String farmID, String owner) {
 		this.farmID = farmID;
-		this.owner = owner;
+		// this.owner = owner;
 		yearList = new ArrayList<annualData>();
 	}
 
@@ -187,15 +192,26 @@ public class Farm {
 		return year * 512 + month * 32 + day;
 	}
 
+	/**
+	 * Return the date of the next day.
+	 * 
+	 * @param year  year of the current date
+	 * @param month month of the current date
+	 * @param day   day of the current date
+	 * @return an array of String of length 3 where index 0, 1, 2 are the year,
+	 *         month, day of the date of next day.
+	 */
 	private int[] nextDate(int year, int month, int day) {
 		int[] nextDate = new int[3];
 
 		if ((day + 1) > 31)
 			if ((month + 1) > 12) {
+				// year crossing
 				year++;
 				month = 1;
 				day = 1;
 			} else {
+				// month crossing
 				month++;
 				day = 1;
 			}
@@ -209,6 +225,17 @@ public class Farm {
 		return nextDate;
 	}
 
+	/**
+	 * Compare 2 dates.
+	 * 
+	 * @param yStart
+	 * @param mStart
+	 * @param dStart
+	 * @param yEnd
+	 * @param mEnd
+	 * @param dEnd
+	 * @return true if the 2 dates are the same
+	 */
 	private boolean sameDate(int yStart, int mStart, int dStart, int yEnd, int mEnd,
 			int dEnd) {
 		return (dStart == dEnd) && (mStart == mEnd) && (yStart == yEnd);
