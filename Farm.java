@@ -19,35 +19,79 @@ public class Farm {
 		yearList = new ArrayList<annualData>();
 	}
 
+	/**
+	 * This class manages all data of this farm object in a specific year.
+	 *
+	 */
 	private class annualData {
 		private int year;
 		private int annualSum;
-		private int[][] annualData;
-		private int[] monthlySum;
+		private int[][] annualData; // 2-d array (12, 31) to representing the data of the
+									// year
+		private int[] monthlySum; // some of weight of each month during the year
 
+		/**
+		 * Default constructor.
+		 */
 		private annualData() {
 			annualData = new int[12][31];
 			monthlySum = new int[12];
 		}
 
+		/**
+		 * Add weight to a date in this year.
+		 * 
+		 * @param month  month of date
+		 * @param day    day of date
+		 * @param weight amount of milk produced by this farm on this date of the year
+		 */
 		private void addData(int month, int day, int weight) {
 			annualData[month - 1][day - 1] += weight;
 			annualSum += weight;
 			monthlySum[month - 1] += weight;
 		}
 
+		/**
+		 * Return the amount of milk produced by this farm on this date of the year.
+		 * 
+		 * @param month month of date
+		 * @param day   day of date
+		 * @return the amount of milk produced by this farm on this date of the year
+		 */
 		private int getData(int month, int day) {
 			return annualData[month - 1][day - 1];
 		}
 
+		/**
+		 * Return the total amount of milk produced by this farm throughout this year.
+		 * 
+		 * @return the total amount of milk produced by this farm throughout this year
+		 */
 		private int getAnnualSum() {
 			return annualSum;
 		}
 
+		/**
+		 * Return the total amount of milk produced by this farm in this month of the
+		 * year.
+		 * 
+		 * @return the total amount of milk produced by this farm in this month of the
+		 *         year
+		 */
 		private int getMonthlySum(int month) {
 			return monthlySum[month - 1];
 		}
 
+		/**
+		 * Return the total amount of milk produced by this farm in this period of time
+		 * in this year.
+		 * 
+		 * @param mStart month of starting date
+		 * @param mEnd   month of ending date
+		 * @param dStart day of starting date
+		 * @param dEnd   day of ending date
+		 * @return
+		 */
 		private int getIntervalSum(int mStart, int mEnd, int dStart, int dEnd) {
 			int sum = 0;
 			int m = 0;
@@ -63,6 +107,11 @@ public class Farm {
 			return -1; // fail
 		}
 
+		/**
+		 * Return the year which the data refer to.
+		 * 
+		 * @return this year
+		 */
 		private int getYear() {
 			return year;
 		}
@@ -127,12 +176,12 @@ public class Farm {
 	}
 
 	/**
-	 * Convert date into an integer representation.
+	 * Convert date into an integer representing.
 	 * 
 	 * @param year
 	 * @param month
 	 * @param day
-	 * @return an integer representation of the date
+	 * @return an integer representing the date
 	 */
 	private int dateToInt(int year, int month, int day) {
 		return year * 512 + month * 32 + day;
@@ -160,9 +209,9 @@ public class Farm {
 		return nextDate;
 	}
 
-	private boolean sameDate(int yStart, int mStart, int dStart, int year2, int mEnd,
+	private boolean sameDate(int yStart, int mStart, int dStart, int yEnd, int mEnd,
 			int dEnd) {
-		return (dStart == dEnd) && (mStart == mEnd) && (yStart == year2);
+		return (dStart == dEnd) && (mStart == mEnd) && (yStart == yEnd);
 	}
 
 	/**
