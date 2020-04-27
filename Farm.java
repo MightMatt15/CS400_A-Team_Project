@@ -91,31 +91,51 @@ public class Farm {
 		return true;
 	}
 
-	public int sumWithinRange(int year1, int month1, int day1, int year2, int month2,
-			int day2) {
+	/**
+	 * Calculate the total amount of milk produced in this farm during a certain
+	 * period. Starting date must be earlier than ending date.
+	 * 
+	 * @param yStart year of starting date
+	 * @param mStart month of starting date
+	 * @param dStart day of starting date
+	 * @param yEnd   year of ending date
+	 * @param mEnd   month of ending date
+	 * @param dEnd   day of ending date
+	 * @return total amount of milk
+	 */
+	public int sumWithinRange(int yStart, int mStart, int dStart, int yEnd, int mEnd,
+			int dEnd) {
 		int sum = 0;
 		int[] nextDate;
 		annualData year = null;
-		// date 1 is the start date, date 2 is the end date
-		while (dateToInt(year1, month1, day1) <= dateToInt(year2, month2, day2)) {
-			year = yearExists(year1);
+
+		while (dateToInt(yStart, mStart, dStart) <= dateToInt(yEnd, mEnd, dEnd)) {
+			year = yearExists(yStart);
 			if (year == null) { // year does not exist; go to the next year
-				year1++;
-				month1 = 1;
-				day1 = 1;
+				yStart++;
+				mStart = 1;
+				dStart = 1;
 				continue;
 			}
-			sum += year.getData(month1, day1);
-			nextDate = nextDate(year1, month1, day1); // increment the date
-			year1 = nextDate[0];
-			month1 = nextDate[1];
-			day1 = nextDate[2];
+			sum += year.getData(mStart, dStart);
+			nextDate = nextDate(yStart, mStart, dStart); // increment the date
+			yStart = nextDate[0];
+			mStart = nextDate[1];
+			dStart = nextDate[2];
 		}
 		return sum;
 	}
 
+	/**
+	 * Convert date into an integer representing.
+	 * 
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return an integer representing the date
+	 */
 	private int dateToInt(int year, int month, int day) {
-		return year * 10000 + month * 100 + day;
+		return year * 512 + month * 32 + day;
 	}
 
 	private int[] nextDate(int year, int month, int day) {
@@ -140,13 +160,13 @@ public class Farm {
 		return nextDate;
 	}
 
-	private boolean sameDate(int year1, int month1, int day1, int year2, int month2,
-			int day2) {
-		return (day1 == day2) && (month1 == month2) && (year1 == year2);
+	private boolean sameDate(int yStart, int mStart, int dStart, int year2, int mEnd,
+			int dEnd) {
+		return (dStart == dEnd) && (mStart == mEnd) && (yStart == year2);
 	}
 
 	/**
-	 * Determine if the annual report has been created.
+	 * Determine if the data of the year is available.
 	 * 
 	 * @param year the year to be found in the year list
 	 * @return true the index of the annual report exists; -1 otherwise
