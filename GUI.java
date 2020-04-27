@@ -67,13 +67,13 @@ public class GUI extends Application {
 		VBox selectionPanel = new VBox();
 		Label selection = createLabel("Filters", "Chalkduster", FontWeight.BOLD, 20);
 		Label year = createLabel("Year", "Times New Roman", FontWeight.BOLD, 15);
-		TextField yearInput = new TextField();
+		TextField yearInput = new TextField("Enter Year:");
 		Label month = createLabel("Month", "Times New Roman", FontWeight.BOLD, 15);
-		TextField monthInput = new TextField();
+		TextField monthInput = new TextField("Enter Month Number:");
 		Label day = createLabel("Day", "Times New Roman", FontWeight.BOLD, 15);
-		TextField dayInput = new TextField();
+		TextField dayInput = new TextField("Enter Day Number:");
 		Label farm = createLabel("Farm", "Times New Roman", FontWeight.BOLD, 15);
-		TextField farmInput = new TextField();
+		TextField farmInput = new TextField("Enter farm ID:");
 
 	      //new button to search
 		Button search = new Button("SEARCH");
@@ -93,32 +93,77 @@ public class GUI extends Application {
 		selectionPanel.getChildren().add(farmInput);
 		selectionPanel.getChildren().add(search);
 		panel.setLeft(selectionPanel);
+		
+		
+		search.setOnAction(event -> {//show weight for that day?
+		  selectionPanel.getChildren().add(createLabel( "Farm "+ farmInput.getText() + "'s data for that day: " + "the data"  , "Times New Roman", FontWeight.BOLD, 15));});
+		
 
 		//add a section for showing total, max, min, avg, and percentages
 		VBox resultsPanel = new VBox();
 		GridPane results = new GridPane();
-		results.add(createLabel("Total:	", "Times New Roman", FontWeight.BOLD, 15), 0, 0);
-		results.add(createLabel("Maximum:	", "Times New Roman", FontWeight.BOLD, 15), 0,
-				1);
-		results.add(createLabel("Minimum:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+		//results.add(createLabel("Total:	", "Times New Roman", FontWeight.BOLD, 15), 0, 0);
+		results.add(createLabel("Maximum By Month:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+				0);
+		results.add(createLabel("Maximum All Farms: ", "Times New Roman", FontWeight.BOLD, 15), 0,
+            1);
+		results.add(createLabel("Minimum By Month:	", "Times New Roman", FontWeight.BOLD, 15), 0,
 				2);
-		results.add(createLabel("Average:	", "Times New Roman", FontWeight.BOLD, 15), 0,
-				3);
+		results.add(createLabel("Minimum All Farms:    ", "Times New Roman", FontWeight.BOLD, 15), 0,
+            3);
+		results.add(createLabel("Average By Month:	", "Times New Roman", FontWeight.BOLD, 15), 0,
+				4);
+		results.add(createLabel("Average All Farms: ", "Times New Roman", FontWeight.BOLD, 15), 0,
+            5);
 		results.add(
 				createLabel("Percentage:	", "Times New Roman", FontWeight.BOLD, 15), 0,
-				4);
-		for (int i = 0; i < 6; i++)
-			results.add(new TextField(), 1, i);
-		results.add(new TextField("e.g: farm 01"), 2, 2);
-		results.add(new TextField("e.g: farm 02"), 2, 3);
-		results.add(new Label("(out of all farms)"), 2, 4);
-		results.add(new Label("(out of the whole time period)"), 2, 5);
+				6);
+		results.add(
+            createLabel("Percentage For Month:", "Times New Roman", FontWeight.BOLD, 15), 0,
+            7);
+		results.add(
+            createLabel("Percentage For Year:", "Times New Roman", FontWeight.BOLD, 15), 0,
+            8);
+		
+		TextField maxMonthTF = new TextField("Enter farmID,year:");
+	    TextField maxAllFarmsTF = new TextField("Enter month,year:");
+	    TextField minMonthTF = new TextField("Enter farmID,year:");
+	    TextField minAllFarmsTF = new TextField("Enter month,year:");
+	    TextField avgMonthTF = new TextField("Enter farmID,year:");
+	    TextField avgAllFarmsTF = new TextField("Enter month,year:");
+        TextField pctgMonth = new TextField("Enter Month:");
+        TextField pctgYear = new TextField("Enter Year:");
+	    Button pctgTotal = new Button("Farms' Percentage of Total");
+
+		
+		results.add(maxMonthTF, 1, 0);
+	    results.add(maxAllFarmsTF, 1, 1);
+	    results.add(minMonthTF, 1, 2);
+	    results.add(minAllFarmsTF, 1, 3);
+	    results.add(avgMonthTF, 1, 4);
+	    results.add(avgAllFarmsTF, 1, 5);
+	    results.add(pctgMonth, 1, 6);
+	    results.add(pctgYear, 1, 7);
+	    results.add(pctgTotal, 1, 8);
+
+	       
 
 		resultsPanel.getChildren()
 				.add(createLabel("Results", "Chalkduster", FontWeight.BOLD, 20));
 		resultsPanel.getChildren().add(results);
 		results.setAlignment(Pos.TOP_LEFT);
 		panel.setCenter(resultsPanel);
+		
+		//results screen
+		BorderPane panelResults = new BorderPane();
+		
+		
+		
+		
+		
+		
+		Scene resultsScene = new Scene(panelResults, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
 		
 		
 		//create the boxes to hold the buttons in each corner on the bottom of the dashboard
@@ -194,13 +239,13 @@ public class GUI extends Application {
 		VBox outputTypes = new VBox();
 		outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
 		outputTypes.getChildren().add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Farm ID, Year"));
+		outputTypes.getChildren().add(new TextField("Farm ID, Year   e.g. 02, 2019"));
 		outputTypes.getChildren().add(createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Year"));
+		outputTypes.getChildren().add(new TextField("Year   e.g. 2019"));
 		outputTypes.getChildren().add(createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Year, Month"));
+		outputTypes.getChildren().add(new TextField("Year, Month   e.g. 2019, 2"));
 		outputTypes.getChildren().add(createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Start date, End Date: year-month-day, month-day"));
+		outputTypes.getChildren().add(new TextField("Start date, End Date:   year,month,day, month,day"));
         panel2.setCenter(outputTypes);
         BorderPane.setAlignment(panel2, Pos.CENTER);
         
@@ -232,6 +277,9 @@ public class GUI extends Application {
 		primaryStage.show();
 	}
 
+	
+	
+	
 	/**
 	 * Create a label with specified font, font weight and size.
 	 * 
