@@ -127,12 +127,12 @@ public class Farm {
 	}
 
 	/**
-	 * Convert date into an integer representing.
+	 * Convert date into an integer representation.
 	 * 
 	 * @param year
 	 * @param month
 	 * @param day
-	 * @return an integer representing the date
+	 * @return an integer representation of the date
 	 */
 	private int dateToInt(int year, int month, int day) {
 		return year * 512 + month * 32 + day;
