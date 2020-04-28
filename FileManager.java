@@ -73,7 +73,7 @@ public class FileManager{
           }
           else {
           String farmNumber = null;
-          String month = null;
+          int month = 0;
           int day = 0;
           int year = 0;
           int weight = 0;
@@ -88,17 +88,18 @@ public class FileManager{
           myBuilder.delete(0, 5);
           if(myBuilder.substring(0, 2).contains("-")) {            
             try {
-              month = getMonth(Integer.parseInt(myBuilder.substring(0,1)));
+              //month = getMonth(Integer.parseInt(myBuilder.substring(0,1)));
+              month = Integer.parseInt(myBuilder.substring(0,1));
               myBuilder.delete(0, 2);
               }catch(Exception e) {
-                month = "ERROR";
+                month = 0;
               }
           }else {
             try {
-            month = getMonth(Integer.parseInt(myBuilder.substring(0,2)));
+            month = Integer.parseInt(myBuilder.substring(0,2));
             myBuilder.delete(0, 3);
             }catch(Exception e) {
-              month = "ERROR";
+              month = 0;
             }
             
           }

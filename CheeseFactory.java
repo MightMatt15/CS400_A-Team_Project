@@ -26,7 +26,7 @@ public class CheeseFactory {
    * @param weight weight of the milk for the day
    * @returns true if inserted successfully
    */
-  public boolean insertSingleData(String farmID, int year, String month, int day, Integer weight) {
+  public boolean insertSingleData(String farmID, int year, int month, int day, int weight) {
     try {
       milkDataFromFarms.get(farmID).insertMilkForDate(year, month, day, weight);
     } catch (IllegalNullKeyException | KeyNotFoundException e) {
