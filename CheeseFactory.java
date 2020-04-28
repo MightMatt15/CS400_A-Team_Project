@@ -56,11 +56,11 @@ public class CheeseFactory {
    * @returns true if edited successfully
    */
   public boolean editSingleData(String farmID, int year, String month, int day, Integer weight) {
-//    try {
-//      milkDataFromFarms.get(farmID).editMilkForDate(year, month, day, weight);
-//    } catch (IllegalNullKeyException | KeyNotFoundException e) {
-//      return false;
-//    }
+    try {
+      milkDataFromFarms.get(farmID).editMilkForDate(year, month, day, weight);
+    } catch (IllegalNullKeyException | KeyNotFoundException e) {
+      return false;
+    }
     return true;
   }
   
@@ -75,11 +75,11 @@ public class CheeseFactory {
    * @returns the data that was removed
    */
   public Integer removeSingleData(String farmID, int year, String month, int day) {
-//    try {
-//      return milkDataFromFarms.get(farmID).removeMilkForDate(year, month, day);
-//    } catch (IllegalNullKeyException | KeyNotFoundException e) {
-//      return -1;
-//    }
+    try {
+      return milkDataFromFarms.get(farmID).removeMilkForDate(year, month, day);
+    } catch (IllegalNullKeyException | KeyNotFoundException e) {
+      return -1;
+    }
     return -1;
   }
 }
