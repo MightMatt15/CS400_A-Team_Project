@@ -335,7 +335,7 @@ public class Farm {
 	 * Calculate the yearly average of milk weight produced by this farm (i.e:
 	 * [kg/day]).
 	 * 
-	 * @param year	target year
+	 * @param year target year
 	 * @return the average milk weight produced per day in this year
 	 */
 	public double annualAvg(int year) {
@@ -345,6 +345,34 @@ public class Farm {
 		return 0;
 	}
 
+	/**
+	 * Calculate annual sum of milk weight produced by this farm in the year
+	 * specified.
+	 * 
+	 * @param year target year
+	 * @return the total milk weight produced this year
+	 */
+	public double annualSum(int year) {
+		annualData yearReport = yearExists(year);
+		if (yearReport != null)
+			return yearReport.getAnnualSum();
+		return 0;
+	}
+	
+	/**
+	 * Calculate annual sum of milk weight produced by this farm in the month
+	 * specified.
+	 * 
+	 * @param year target year
+	 * @return the total milk weight produce this month
+	 */
+	public double monthlySum(int year, int month) {
+		annualData yearReport = yearExists(year);
+		if (yearReport != null)
+			return yearReport.getMonthlySum(month);
+		return 0;
+	}
+	
 	/**
 	 * Clear all data relating to the farm.
 	 */
