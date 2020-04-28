@@ -63,7 +63,7 @@ public class FileManager{
     
     try {
       
-      while(realFile.hasNextLine()) {        
+      while(realFile.hasNextLine()) {      
           
         
           String currentLine = null;
@@ -129,7 +129,7 @@ public class FileManager{
             weight = 0;
           }
           myFactory.insertSingleData(farmNumber, year, month, day, weight);
-          System.out.println("Year: " + year + "Month: " + "Day: " + day + "Farm Number " + farmNumber + "Weight: " + weight);
+          System.out.println("Year: " + year + " Month: " + month + " Day: " + day + " Farm Number " + farmNumber + " Weight: " + weight);
           }
         
           
