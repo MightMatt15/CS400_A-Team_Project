@@ -26,11 +26,7 @@ public class CheeseFactory {
    * @param weight weight of the milk for the day
    * @returns true if inserted successfully
    */
-<<<<<<< HEAD
-  public boolean insertSingleData(String farmID, int year, int month, int day, Integer weight) {
-=======
   public boolean insertSingleData(String farmID, int year, int month, int day, int weight) {
->>>>>>> 98063514bdecfcc3b7eea13f7e51e565f0917254
     try {
       milkDataFromFarms.get(farmID).insertMilkForDate(year, month, day, weight);
     } catch (IllegalNullKeyException | KeyNotFoundException e) {
@@ -60,11 +56,11 @@ public class CheeseFactory {
    * @returns true if edited successfully
    */
   public boolean editSingleData(String farmID, int year, String month, int day, Integer weight) {
-//    try {
-//      milkDataFromFarms.get(farmID).editMilkForDate(year, month, day, weight);
-//    } catch (IllegalNullKeyException | KeyNotFoundException e) {
-//      return false;
-//    }
+    try {
+      milkDataFromFarms.get(farmID).editMilkForDate(year, month, day, weight);
+    } catch (IllegalNullKeyException | KeyNotFoundException e) {
+      return false;
+    }
     return true;
   }
   
@@ -79,11 +75,11 @@ public class CheeseFactory {
    * @returns the data that was removed
    */
   public Integer removeSingleData(String farmID, int year, String month, int day) {
-//    try {
-//      return milkDataFromFarms.get(farmID).removeMilkForDate(year, month, day);
-//    } catch (IllegalNullKeyException | KeyNotFoundException e) {
-//      return -1;
-//    }
+    try {
+      return milkDataFromFarms.get(farmID).removeMilkForDate(year, month, day);
+    } catch (IllegalNullKeyException | KeyNotFoundException e) {
+      return -1;
+    }
     return -1;
   }
 }
