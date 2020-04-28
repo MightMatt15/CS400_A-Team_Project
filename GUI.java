@@ -264,7 +264,7 @@ public class GUI extends Application {
         //read the input file when a user types in a filename
         inputTextField.setOnAction(e -> {
           try {
-            if(fileManager.readFile(inputTextField.getText())) {
+            if(FileManager.readFile(inputTextField.getText())) {
               Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
               alert.showAndWait();
             }else {
