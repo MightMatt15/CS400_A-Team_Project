@@ -284,7 +284,7 @@ public class GUI extends Application {
         inputTextField.setOnAction(e -> {
           try {
             if(fileManager.readFile(inputTextField.getText())) {
-              Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
+              Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText().substring(inputTextField.getText().lastIndexOf('\\')) + " loaded");
               alert.showAndWait();
             }else {
               Alert alert = new Alert(AlertType.ERROR, "Input file was unable to be loaded");
