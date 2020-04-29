@@ -4,11 +4,13 @@ package application;
 public class CheeseFactory {
 
   public BST<String, Farm> milkDataFromFarms;
+  public int numFarms;
   
   
   
   public CheeseFactory() {
     milkDataFromFarms = new BST<String, Farm>();
+    numFarms = 0;
   }
   
   /*
@@ -26,6 +28,7 @@ public class CheeseFactory {
       //if farm doesnt exist, add it
       if(!milkDataFromFarms.contains(farmID)) {
         milkDataFromFarms.insert(farmID, new Farm(farmID));
+        numFarms++;
       }
       milkDataFromFarms.get(farmID).insertMilkForDate(year, month, day, weight);
     } catch (IllegalNullKeyException | KeyNotFoundException | DuplicateKeyException e) {

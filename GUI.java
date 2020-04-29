@@ -2,6 +2,7 @@ package application;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
@@ -329,7 +330,7 @@ public class GUI extends Application {
             //get inputs from the text field
             String[] inputResults = maxMonthTF.getText().split(",");
             //clear the screen and print the results
-            resultsVBox.getChildren().removeAll();
+            resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
             resultsVBox.getChildren().add(createLabel("January Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("February Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
@@ -351,36 +352,61 @@ public class GUI extends Application {
             alert.showAndWait();
           }
           });
+        
         maxAllFarmsTF.setOnAction(event -> {
         //page for results
-          primaryStage.setScene(resultsScene);
-          primaryStage.show();
+          try {
+            //get inputs from the text field
+            String[] inputResults = maxAllFarmsTF.getText().split(",");
+            //clear the screen and print the results
+            resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
+            resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
+           
+            //get all of the farms and print out their maximums for the month
+            List<String> farms = cheeseFactory.milkDataFromFarms.getInOrderTraversal();
+            for(int i = 0; i < farms.size(); ++i)
+              resultsVBox.getChildren().add(createLabel("Farm: " + farms.get(i) + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            
+            //change the scene to the results scene
+            panelResults.setCenter(resultsVBox);
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          }catch(ArrayIndexOutOfBoundsException e) {
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            alert.showAndWait();
+          }
         });
+        
         minMonthTF.setOnAction(event -> {
           //page for results
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           });
+        
         minAllFarmsTF.setOnAction(event -> {
           //page for results
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           });
+        
         avgMonthTF.setOnAction(event -> {
           //page for results
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           });
+        
         avgAllFarmsTF.setOnAction(event -> {
           //page for results
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           });
+        
         pctgMonth.setOnAction(event -> {
           //page for results
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           });
+        
         pctgYear.setOnAction(event -> {
           //page for results
             primaryStage.setScene(resultsScene);
