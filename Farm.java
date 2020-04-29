@@ -18,7 +18,7 @@ public class Farm {
 	 * @param farmID farm identifier
 	 * @param owner  owner of the farm
 	 */
-	public Farm(String farmID, String owner) {
+	public Farm(String farmID) {
 		this.farmID = farmID;
 		// this.owner = owner;
 		yearList = new ArrayList<annualData>();
@@ -389,4 +389,17 @@ public class Farm {
 	public String getFarmID() {
 		return farmID;
 	}
+	
+	/**
+     * Return the weight for a given day
+     * 
+     * @return the weight on that day or -1 if the year was not found
+     *      
+     */
+    public int getSingleData(int year, int month, int day) {
+      annualData yearReport = yearExists(year);
+      if (yearReport != null)
+          return yearReport.getData(month, day);
+        return -1;
+    }
 }

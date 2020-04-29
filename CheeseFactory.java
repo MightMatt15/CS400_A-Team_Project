@@ -3,14 +3,9 @@ package application;
 
 public class CheeseFactory {
 
-  public String name;
-  public BST<String, Farm> milkDataFromFarms;              //TODO data structure
+  public BST<String, Farm> milkDataFromFarms;
   
   
-  public CheeseFactory(String name) {
-    this.name = name;
-    milkDataFromFarms = new BST<String, Farm>();
-  }
   
   public CheeseFactory() {
     milkDataFromFarms = new BST<String, Farm>();
@@ -28,20 +23,17 @@ public class CheeseFactory {
    */
   public boolean insertSingleData(String farmID, int year, int month, int day, int weight) {
     try {
+      //if farm doesnt exist, add it
+      if(!milkDataFromFarms.contains(farmID)) {
+        milkDataFromFarms.insert(farmID, new Farm(farmID));
+      }
       milkDataFromFarms.get(farmID).insertMilkForDate(year, month, day, weight);
-    } catch (IllegalNullKeyException | KeyNotFoundException e) {
+    } catch (IllegalNullKeyException | KeyNotFoundException | DuplicateKeyException e) {
       return false;
     }
     return true;
   }
   
-  
-  
-  
-//  public boolean insertData(String farmID, int year, int month) {
-//    
-//    return false;
-//  }
   
   
   
@@ -78,6 +70,25 @@ public class CheeseFactory {
     try {
       milkDataFromFarms.get(farmID).removeMilkForDate(year, month, day);
     } catch (IllegalNullKeyException | KeyNotFoundException e) {
+    }
+  }
+  
+  
+  
+  /*
+   * return a single data point on a given day
+   * 
+   * @param farmID unique ID of the farm
+   * @param year year the date is in
+   * @param month month the date to get is in
+   * @param day day to edit
+   * @returns the data that was retrieved or -2 if the farm was not found
+   */
+  public int getSingleData(String farmID, int year, int month, int day) {
+    try {
+      return milkDataFromFarms.get(farmID).getSingleData(year, month, day);
+    } catch (IllegalNullKeyException | KeyNotFoundException e) {
+      return -2;
     }
   }
 }

@@ -9,6 +9,13 @@ public class FileManager {
 
   public String inputFile;
   public String outputFile;
+  public CheeseFactory myFactory;
+  
+  public FileManager(CheeseFactory factory) {
+    myFactory = factory;
+  }
+  
+  
 
   private static String getMonth(int monthInt) {
     String month = null;
@@ -43,8 +50,7 @@ public class FileManager {
   }
 
 
-  public static boolean readFile(String inputFile) throws IOException {
-    CheeseFactory myFactory = new CheeseFactory();
+  public boolean readFile(String inputFile) throws IOException {
     File file = null;
     // this.inputFile = inputFile;
     file = new File(inputFile);
@@ -114,8 +120,8 @@ public class FileManager {
             weight = 0;
           }
           myFactory.insertSingleData(farmNumber, year, month, day, weight);
-          System.out.println("Year: " + year + "Month: " + "Day: " + day + "Farm Number "
-              + farmNumber + "Weight: " + weight);
+          System.out.println("Year: " + year + " Month: " + month +  " Day: " + day + " Farm Number: "
+              + farmNumber + " Weight: " + weight);
         }
 
 

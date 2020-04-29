@@ -40,18 +40,19 @@ public class GUI extends Application {
 
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 400;
-    //read and write the files
-    FileManager fileManager = new FileManager();
     //manage data provided in files for visualization and manipulation
     DataManager dataManager = new DataManager();
     //factory to store all farms
     CheeseFactory cheeseFactory = new CheeseFactory();
+    //read and write the files
+    FileManager fileManager = new FileManager(cheeseFactory);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // save args example
         // args = this.getParameters().getRaw();
 
+        //dashboard
         BorderPane panel = new BorderPane();
 
          //change the background color
@@ -97,7 +98,25 @@ public class GUI extends Application {
         
         
         search.setOnAction(event -> {//show weight for that day?
-          selectionPanel.getChildren().add(createLabel( "Farm "+ farmInput.getText() + "'s data for that day: " + "the data"  , "Times New Roman", FontWeight.BOLD, 15));});
+          try{
+            int weight = cheeseFactory.getSingleData(farmInput.getText(), Integer.parseInt(yearInput.getText()), Integer.parseInt(monthInput.getText()), Integer.parseInt(dayInput.getText())); 
+            Alert alert;
+            if(weight == -2) {
+              alert = new Alert(AlertType.ERROR, "The farmID entered does not exist in the data");
+              alert.showAndWait();
+            }else if(weight == -1) {
+              alert = new Alert(AlertType.ERROR, "The year entered does not exist in the data");
+              alert.showAndWait();
+            }else {
+              Label searchedData = createLabel( "Farm "+ farmInput.getText() + "'s data for that day: " + weight  , "Times New Roman", FontWeight.BOLD, 15);
+              selectionPanel.getChildren().remove(searchedData);
+              selectionPanel.getChildren().add(searchedData);
+            }
+          }catch(ArrayIndexOutOfBoundsException e) {
+            Alert alert = new Alert(AlertType.ERROR, "The day or month entered does not exist in the data");
+            alert.showAndWait();
+          }
+          });
         
 
         //add a section for showing total, max, min, avg, and percentages
@@ -264,7 +283,7 @@ public class GUI extends Application {
         //read the input file when a user types in a filename
         inputTextField.setOnAction(e -> {
           try {
-            if(FileManager.readFile(inputTextField.getText())) {
+            if(fileManager.readFile(inputTextField.getText())) {
               Alert alert = new Alert(AlertType.INFORMATION, "Input file " + inputTextField.getText() + " loaded");
               alert.showAndWait();
             }else {
