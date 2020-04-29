@@ -34,7 +34,7 @@ public class Farm {
 		private int[][] annualData; // 2-d array (12, 31) to representing the data of the
 									// year
 		private int[] monthlySum; // some of weight of each month during the year
-
+		
 		/**
 		 * Constructor
 		 */
@@ -393,6 +393,10 @@ public class Farm {
 	/**
      * Return the weight for a given day
      * 
+     * @param year  year of the date to get
+     * @param month month of the date to get
+     * @param day   day of the date to get
+     * 
      * @return the weight on that day or -1 if the year was not found
      *      
      */
@@ -402,4 +406,6 @@ public class Farm {
           return yearReport.getData(month, day);
         return -1;
     }
+    
+    
 }

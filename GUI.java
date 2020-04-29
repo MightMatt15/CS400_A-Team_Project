@@ -80,8 +80,6 @@ public class GUI extends Application {
           //new button to search
         Button search = new Button("SEARCH");
         
-        
-        
 
           //add the text fields to the V box on the left
         selectionPanel.getChildren().add(selection);
@@ -97,6 +95,7 @@ public class GUI extends Application {
         panel.setLeft(selectionPanel);
         
         
+        //action for search
         search.setOnAction(event -> {//show weight for that day?
           try{
             int weight = cheeseFactory.getSingleData(farmInput.getText(), Integer.parseInt(yearInput.getText()), Integer.parseInt(monthInput.getText()), Integer.parseInt(dayInput.getText())); 
@@ -176,13 +175,24 @@ public class GUI extends Application {
         
         //results screen
         BorderPane panelResults = new BorderPane();
+        //change the background color
+        panelResults.setBackground(background);
+
         
         
         
         
         
         
-        Scene resultsScene = new Scene(panelResults, WINDOW_WIDTH, WINDOW_HEIGHT);
+        
+        
+        //title on the dashboard
+        Label titleResults = new Label("Milk Production Results\n   -- Chalet Cheese Factory");
+        titleResults.setFont(Font.font("Marker Felt", FontWeight.EXTRA_BOLD, 25));
+        panelResults.setTop(titleResults);
+        BorderPane.setAlignment(titleResults, Pos.CENTER);
+        
+        
         
         
         
@@ -295,6 +305,81 @@ public class GUI extends Application {
             alert.showAndWait();
           }
           });
+        
+        
+        
+        
+        
+        
+        VBox resultsVBox = new VBox();
+        
+        //button to return to dashboard
+        panelResults.setRight(dashboard1);
+        BorderPane.setAlignment(dashboard1, Pos.BOTTOM_RIGHT);
+        //scenes for each result
+        Scene resultsScene = new Scene(panelResults, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+        
+        //TODO fix dataManager so the calls to the methods can have arguments
+        
+        //results
+        maxMonthTF.setOnAction(event -> {
+          //page for results
+          try {
+            String[] inputResults = maxMonthTF.getText().split(",");
+            resultsVBox.getChildren().removeAll();
+            resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
+            resultsVBox.getChildren().add(createLabel("January Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
+            panelResults.setCenter(resultsVBox);
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          }catch(ArrayIndexOutOfBoundsException e) {
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            alert.showAndWait();
+          }
+          });
+        maxAllFarmsTF.setOnAction(event -> {
+        //page for results
+          primaryStage.setScene(resultsScene);
+          primaryStage.show();
+        });
+        minMonthTF.setOnAction(event -> {
+          //page for results
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          });
+        minAllFarmsTF.setOnAction(event -> {
+          //page for results
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          });
+        avgMonthTF.setOnAction(event -> {
+          //page for results
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          });
+        avgAllFarmsTF.setOnAction(event -> {
+          //page for results
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          });
+        pctgMonth.setOnAction(event -> {
+          //page for results
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          });
+        pctgYear.setOnAction(event -> {
+          //page for results
+            primaryStage.setScene(resultsScene);
+            primaryStage.show();
+          });
+        
+        
+        
+        
+        
+        
+        
         
         
         // Add the stuff and set the primary stage
