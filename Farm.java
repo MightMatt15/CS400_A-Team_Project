@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public class Farm {
 	private String farmID; // farm ID can be any string
-	// private String owner;
 	private ArrayList<annualData> yearList;
 
 	/**
@@ -20,7 +19,6 @@ public class Farm {
 	 */
 	public Farm(String farmID) {
 		this.farmID = farmID;
-		// this.owner = owner;
 		yearList = new ArrayList<annualData>();
 	}
 
@@ -33,15 +31,15 @@ public class Farm {
 		private int annualSum;
 		private int[][] annualData; // 2-d array (12, 31) to representing the data of the
 									// year
-		private int[] monthlySum; // some of weight of each month during the year
-		
+		private int[] monthlyData; // some of weight of each month during the year
+
 		/**
 		 * Constructor
 		 */
 		private annualData(int year) {
 			this.year = year;
 			annualData = new int[12][31];
-			monthlySum = new int[12];
+			monthlyData = new int[12];
 		}
 
 		/**
@@ -54,7 +52,7 @@ public class Farm {
 		private void addData(int month, int day, int weight) {
 			annualData[month - 1][day - 1] += weight;
 			annualSum += weight;
-			monthlySum[month - 1] += weight;
+			monthlyData[month - 1] += weight;
 		}
 
 		/**
@@ -68,7 +66,7 @@ public class Farm {
 			int originalWeight = annualData[month - 1][day - 1];
 			annualData[month - 1][day - 1] = weight;
 			annualSum += (weight - originalWeight);
-			monthlySum[month - 1] += (weight - originalWeight);
+			monthlyData[month - 1] += (weight - originalWeight);
 		}
 
 		private double getAnnualAverage(int year) {
@@ -97,7 +95,7 @@ public class Farm {
 				numberofDays = (year % 4 == 0) ? 29 : 28;
 				break;
 			}
-			return (double) monthlySum[month - 1] / numberofDays;
+			return (double) monthlyData[month - 1] / numberofDays;
 		}
 
 		/**
@@ -127,8 +125,8 @@ public class Farm {
 		 * @return the total amount of milk produced by this farm in this month of the
 		 *         year
 		 */
-		private int getMonthlySum(int month) {
-			return monthlySum[month - 1];
+		private int getmonthlyData(int month) {
+			return monthlyData[month - 1];
 		}
 
 		/**
@@ -168,7 +166,7 @@ public class Farm {
 		private void clearAll() {
 			annualSum = 0;
 			annualData = new int[12][31];
-			monthlySum = new int[12];
+			monthlyData = new int[12];
 		}
 	}
 
@@ -253,8 +251,10 @@ public class Farm {
 	 * @param month
 	 * @param day
 	 */
-	public void removeMilkForDate(int year, int month, int day) {
+	public int removeMilkForDate(int year, int month, int day) {
+		int weightOnDate = getSingleData(year, month, day);
 		editWeight(year, month, day, 0);
+		return weightOnDate;
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class Farm {
 			return yearReport.getAnnualSum();
 		return 0;
 	}
-	
+
 	/**
 	 * Calculate annual sum of milk weight produced by this farm in the month
 	 * specified.
@@ -366,13 +366,13 @@ public class Farm {
 	 * @param year target year
 	 * @return the total milk weight produce this month
 	 */
-	public double monthlySum(int year, int month) {
+	public double monthlyData(int year, int month) {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null)
-			return yearReport.getMonthlySum(month);
+			return yearReport.getmonthlyData(month);
 		return 0;
 	}
-	
+
 	/**
 	 * Clear all data relating to the farm.
 	 */
@@ -389,23 +389,17 @@ public class Farm {
 	public String getFarmID() {
 		return farmID;
 	}
-	
+
 	/**
-     * Return the weight for a given day
-     * 
-     * @param year  year of the date to get
-     * @param month month of the date to get
-     * @param day   day of the date to get
-     * 
-     * @return the weight on that day or -1 if the year was not found
-     *      
-     */
-    public int getSingleData(int year, int month, int day) {
-      annualData yearReport = yearExists(year);
-      if (yearReport != null)
-          return yearReport.getData(month, day);
-        return -1;
-    }
-    
-    
+	 * Return the weight for a given day
+	 * 
+	 * @return the weight on that day or -1 if the year was not found
+	 * 
+	 */
+	public int getSingleData(int year, int month, int day) {
+		annualData yearReport = yearExists(year);
+		if (yearReport != null)
+			return yearReport.getData(month, day);
+		return -1;
+	}
 }
