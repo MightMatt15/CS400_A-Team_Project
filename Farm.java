@@ -74,7 +74,7 @@ public class Farm {
 			return (double) annualSum / numberofDays;
 		}
 
-		private double getMontlyAverage(int month) {
+		private double getMonthlyAverage(int month) {
 			int numberofDays = 0;
 			switch (month) {
 			case 1:
@@ -360,18 +360,36 @@ public class Farm {
 	}
 
 	/**
-	 * Calculate annual sum of milk weight produced by this farm in the month
-	 * specified.
+	 * Return monthly sum of weight of the year.
 	 * 
 	 * @param year target year
-	 * @return the total milk weight produce this month
+	 * @return monthly data of the year
 	 */
-	public double monthlyData(int year, int month) {
+	public int[] monthlySum(int year) {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null)
-			return yearReport.getmonthlyData(month);
-		return 0;
+			return yearReport.monthlyData;
+		return new int[12]; // empty data vector
 	}
+	
+	/**
+	 * Return monthly average data of the year.
+	 * 
+	 * @param year target year
+	 * @return monthly average of the year
+	 */
+	public double[] monthlyAvg(int year) {
+		annualData yearReport = yearExists(year);
+		if (yearReport != null) {
+			double[] monthlyAvg = new double[12];
+			for(int i = 0; i < 12; i++) {
+				monthlyAvg[i] = yearReport.getMonthlyAverage(i);
+			}
+			return monthlyAvg;
+		}
+		return new double[12]; // empty data vector
+	}
+	
 
 	/**
 	 * Clear all data relating to the farm.
@@ -393,13 +411,13 @@ public class Farm {
 	/**
 	 * Return the weight for a given day
 	 * 
-	 * @return the weight on that day or -1 if the year was not found
+	 * @return the weight on that day or 0 if the year was not found
 	 * 
 	 */
 	public int getSingleData(int year, int month, int day) {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null)
 			return yearReport.getData(month, day);
-		return -1;
+		return 0;
 	}
 }
