@@ -111,6 +111,33 @@ public class DataManager {
 		// {String: farmN, int[12]: [0: Jan.data, 1: Feb.data, ..., 11: Dec.data]}
 		return farmReportByMonth;
 	}
+	
+	public void writeFarmReport(String farmID, int year, String path) {
+	  
+	  try {
+      FileWriter writer1 = new FileWriter(path);
+      PrintWriter writer = new PrintWriter(writer1);
+      for(int i = 0; i < farmMonthlyReport(year).length; i++) {
+        
+        if(farmMonthlyReport(year)[i].farmID.equals(farmID)) {
+          //System.out.println(farmMonthlyReport(year)[i].monthlyReport[2]);
+          for(int j = 0; j < farmMonthlyReport(year)[i].monthlyReport.length; j++) {
+            writer.println("Month " + (j + 1) + " Weight: " + farmMonthlyReport(year)[i].monthlyReport[j]);
+            
+            
+          }
+        }
+        
+      }      
+      writer.close();
+    } catch (IOException e) {
+      
+      e.printStackTrace();
+    }
+	  
+	  
+	  
+	}
 
 	public double getMonthlyMin(int year) {
 		double[] monthlyReport = getMonthlySumVec(year);
