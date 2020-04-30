@@ -203,7 +203,7 @@ public class Farm {
 	 * @param yEnd   year of ending date
 	 * @param mEnd   month of ending date
 	 * @param dEnd   day of ending date
-	 * @return a vector of length 2: vec[0]: sum of weight within this range; vec[1]: time span (in days)
+	 * @return total amount of milk
 	 */
 	public int[] sumWithinRange(int yStart, int mStart, int dStart, int yEnd, int mEnd,
 			int dEnd) {
@@ -332,17 +332,14 @@ public class Farm {
 	/**
 	 * Compare 2 dates.
 	 * 
-	 * @param yStart
-	 * @param mStart
-	 * @param dStart
-	 * @param yEnd
-	 * @param mEnd
-	 * @param dEnd
-	 * @return true if the 2 dates are the same
+	 * @param m1
+	 * @param d1
+	 * @param m2
+	 * @param d2
+	 * @return true if the 2 dates are the same; false otherwise
 	 */
-	private boolean sameDate(int yStart, int mStart, int dStart, int yEnd, int mEnd,
-			int dEnd) {
-		return (dStart == dEnd) && (mStart == mEnd) && (yStart == yEnd);
+	private boolean sameDate(int m1, int d1, int m2, int d2) {
+		return (d1 == d2) && (m1 == m2);
 	}
 
 	/**
@@ -398,7 +395,7 @@ public class Farm {
 			return yearReport.monthlyData;
 		return new int[12]; // empty data vector
 	}
-	
+
 	/**
 	 * Return monthly average data of the year.
 	 * 
@@ -409,14 +406,13 @@ public class Farm {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null) {
 			double[] monthlyAvg = new double[12];
-			for(int i = 1; i <= 12; i++) {
-				monthlyAvg[i - 1] = yearReport.getMonthlyAverage(i);
+			for (int i = 1; i <= 12; i++) {
+				monthlyAvg[i-1] = yearReport.getMonthlyAverage(i);
 			}
 			return monthlyAvg;
 		}
 		return new double[12]; // empty data vector
 	}
-	
 
 	/**
 	 * Clear all data relating to the farm.
