@@ -263,7 +263,7 @@ public class GUI extends Application {
 				.add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
 		outputTypes.getChildren()
 				.add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
-//		outputTypes.getChildren().add(new TextField("Farm ID, Year   e.g. 02, 2019"));
+		outputTypes.getChildren().add(new TextField("Farm ID, Year   e.g. 02, 2019"));
 //		outputTypes.getChildren().add(
 //				createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
 //		outputTypes.getChildren().add(new TextField("Year   e.g. 2019"));
