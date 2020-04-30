@@ -77,6 +77,8 @@ public class GUI extends Application {
 
 		// new button to search
 		Button search = new Button("SEARCH");
+		Label searchedData = createLabel("", "Times New Roman",
+        FontWeight.BOLD, 15);
 
 		// add the text fields to the V box on the left
 		selectionPanel.getChildren().add(selection);
@@ -89,6 +91,7 @@ public class GUI extends Application {
 		selectionPanel.getChildren().add(farm);
 		selectionPanel.getChildren().add(farmInput);
 		selectionPanel.getChildren().add(search);
+		selectionPanel.getChildren().add(searchedData);
 		panel.setLeft(selectionPanel);
 
 		search.setOnAction(event -> {// show weight for that day?
@@ -107,16 +110,18 @@ public class GUI extends Application {
 							"The year entered does not exist in the data");
 					alert.showAndWait();
 				} else {
-					Label searchedData = createLabel("Farm " + farmInput.getText()
-							+ "'s data for that day: " + weight, "Times New Roman",
-							FontWeight.BOLD, 15);
-					selectionPanel.getChildren().remove(searchedData);
-					selectionPanel.getChildren().add(searchedData);
+					searchedData.setText("Farm " + farmInput.getText()
+			        + "'s data for that day: " + weight);
+					
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				Alert alert = new Alert(AlertType.ERROR,
 						"The day or month entered does not exist in the data");
 				alert.showAndWait();
+			} catch(NumberFormatException e) {
+			  Alert alert = new Alert(AlertType.ERROR,
+                  "The day, month, and year entered should be a number");
+			  alert.showAndWait();
 			}
 		});
 
