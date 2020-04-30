@@ -156,7 +156,7 @@ public class GUI extends Application {
 		TextField avgAllFarmsTF = new TextField("Enter month,year:");
 		TextField pctgMonth = new TextField("Enter Month:");
 		TextField pctgYear = new TextField("Enter Year:");
-		Button pctgTotal = new Button("Farms' Percentage of Total");
+		//Button pctgTotal = new Button("Farms' Percentage of Total");
 
 		results.add(maxMonthTF, 1, 0);
 		results.add(maxAllFarmsTF, 1, 1);
@@ -166,7 +166,7 @@ public class GUI extends Application {
 		results.add(avgAllFarmsTF, 1, 5);
 		results.add(pctgMonth, 1, 6);
 		results.add(pctgYear, 1, 7);
-		results.add(pctgTotal, 1, 8);
+		//results.add(pctgTotal, 1, 8);
 		//add to center of screen
 		resultsPanel.getChildren()
 				.add(createLabel("Results", "Chalkduster", FontWeight.BOLD, 20));
