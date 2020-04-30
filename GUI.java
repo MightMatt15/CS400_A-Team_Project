@@ -110,9 +110,9 @@ public class GUI extends Application {
 							"The year entered does not exist in the data");
 					alert.showAndWait();
 				} else {
-					searchedData.setText("Farm " + farmInput.getText()
+				  //show the data searched for
+					searchedData.setText("" + farmInput.getText()
 			        + "'s data for that day: " + weight);
-					
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				Alert alert = new Alert(AlertType.ERROR,
@@ -128,8 +128,6 @@ public class GUI extends Application {
 		// add a section for showing total, max, min, avg, and percentages
 		VBox resultsPanel = new VBox();
 		GridPane results = new GridPane();
-		// results.add(createLabel("Total: ", "Times New Roman", FontWeight.BOLD, 15),
-		// 0, 0);
 		results.add(createLabel("Maximum By Month:  ", "Times New Roman", FontWeight.BOLD,
 				15), 0, 0);
 		results.add(createLabel("Maximum All Farms: ", "Times New Roman", FontWeight.BOLD,
@@ -169,7 +167,7 @@ public class GUI extends Application {
 		results.add(pctgMonth, 1, 6);
 		results.add(pctgYear, 1, 7);
 		results.add(pctgTotal, 1, 8);
-
+		//add to center of screen
 		resultsPanel.getChildren()
 				.add(createLabel("Results", "Chalkduster", FontWeight.BOLD, 20));
 		resultsPanel.getChildren().add(results);
@@ -180,11 +178,9 @@ public class GUI extends Application {
 		BorderPane panelResults = new BorderPane();
 		//change the background color
         panelResults.setBackground(background);
-
 		Scene resultsScene = new Scene(panelResults, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		// create the boxes to hold the buttons in each corner on the bottom of the
-		// dashboard
+		// create the boxes to hold the buttons in each corner on the bottom of the dashboard
 		HBox bottomBox = new HBox();
 		HBox leftBox = new HBox();
 		HBox.setHgrow(leftBox, Priority.ALWAYS);
@@ -210,6 +206,7 @@ public class GUI extends Application {
 		// set the main scene
 		Scene mainScene = new Scene(panel, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+		
 		// secondary scene
 
 		// output file scene
@@ -259,17 +256,17 @@ public class GUI extends Application {
 				.add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
 		outputTypes.getChildren()
 				.add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Farm ID, Year   e.g. 02, 2019"));
-		outputTypes.getChildren().add(
-				createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Year   e.g. 2019"));
-		outputTypes.getChildren().add(
-				createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren().add(new TextField("Year, Month   e.g. 2019, 2"));
-		outputTypes.getChildren().add(
-				createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
-		outputTypes.getChildren()
-				.add(new TextField("Start date, End Date:   year,month,day, month,day"));
+//		outputTypes.getChildren().add(new TextField("Farm ID, Year   e.g. 02, 2019"));
+//		outputTypes.getChildren().add(
+//				createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
+//		outputTypes.getChildren().add(new TextField("Year   e.g. 2019"));
+//		outputTypes.getChildren().add(
+//				createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
+//		outputTypes.getChildren().add(new TextField("Year, Month   e.g. 2019, 2"));
+//		outputTypes.getChildren().add(
+//				createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
+//		outputTypes.getChildren()
+//				.add(new TextField("Start date, End Date:   year,month,day, month,day"));
 		panel2.setCenter(outputTypes);
 		BorderPane.setAlignment(panel2, Pos.CENTER);
 
@@ -325,7 +322,7 @@ public class GUI extends Application {
 		
 		//results
         maxMonthTF.setOnAction(event -> {
-          //page for results
+          //page for max in a month
           try {
             //get inputs from the text field
             String[] inputResults = maxMonthTF.getText().split(",");
@@ -348,13 +345,14 @@ public class GUI extends Application {
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
             Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
             alert.showAndWait();
           }
           });
         
         maxAllFarmsTF.setOnAction(event -> {
-        //page for results
+        //page for max for all farms in a month
           try {
             //get inputs from the text field
             String[] inputResults = maxAllFarmsTF.getText().split(",");
@@ -364,55 +362,57 @@ public class GUI extends Application {
            
             //get all of the farms and print out their maximums for the month
             for(int i = 0; i < 5; ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + dataManager + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+              resultsVBox.getChildren().add(createLabel("Farm: " +   ": ", "Times New Roman", FontWeight.BOLD, 15));
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
             Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
             alert.showAndWait();
           }
         });
         
         minMonthTF.setOnAction(event -> {
-        //page for results
+        //page for min of a farm each month in a year
           try {
             //get inputs from the text field
             String[] inputResults = minMonthTF.getText().split(",");
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + minMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
-            resultsVBox.getChildren().add(createLabel("January Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("February Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("March Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("April Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("May Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("June Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("July Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("August Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("September Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("October Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("November Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("December Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("January Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("February Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("March Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("April Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("May Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("June Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("July Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("August Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("September Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("October Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("November Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("December Min: " + "", "Times New Roman", FontWeight.BOLD, 15));
             panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
             Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
             alert.showAndWait();
           }
           });
         
         minAllFarmsTF.setOnAction(event -> {
-        //page for results
+        //page for min for all farms for a month
           try {
             //get inputs from the text field
             String[] inputResults = minAllFarmsTF.getText().split(",");
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
-            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + maxAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
+            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + minAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
             //get all of the farms and print out their maximums for the month
             for(int i = 0; i < 5; ++i)
@@ -423,33 +423,112 @@ public class GUI extends Application {
             primaryStage.setScene(resultsScene);
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
             Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
             alert.showAndWait();
           }
           });
         
         avgMonthTF.setOnAction(event -> {
-          //page for results
+        //page for results
+          try {
+            //get inputs from the text field
+            String[] inputResults = avgMonthTF.getText().split(",");
+            //clear the screen and print the results
+            resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
+            resultsVBox.getChildren().add(createLabel("Results for Average Weights for " + avgMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
+            resultsVBox.getChildren().add(createLabel("January Avg: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("February Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("March Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("April Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("May Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("June Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("July Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("August Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("September Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("October Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("November Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("December Avg: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
+          }catch(ArrayIndexOutOfBoundsException e) {
+            //entered format wrong
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            alert.showAndWait();
+          }
           });
         
         avgAllFarmsTF.setOnAction(event -> {
-          //page for results
+          //page for avg 
+          try {
+            //get inputs from the text field
+            String[] inputResults =avgAllFarmsTF.getText().split(",");
+            //clear the screen and print the results
+            resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
+            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + avgAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
+           
+            //get all of the farms and print out their maximums for the month
+            for(int i = 0; i < 5; ++i)
+              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            
+            //change the scene to the results scene
+            panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
+          }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            alert.showAndWait();
+          }
           });
         
         pctgMonth.setOnAction(event -> {
-          //page for results
+        //page for percentage each month for all farms
+          try {
+            //get inputs from the text field
+            String[] inputResults = pctgMonth.getText().split(",");
+            //clear the screen and print the results
+            resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
+            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + pctgMonth.getText(), "Chalkduster", FontWeight.BOLD, 20));
+           
+            //get all of the farms and print out their maximums for the month
+            for(int i = 0; i < 5; ++i)
+              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            
+            //change the scene to the results scene
+            panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
+          }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            alert.showAndWait();
+          }
           });
         
         pctgYear.setOnAction(event -> {
-          //page for results
+        //page for percentage for a year for all farms
+          try {
+            //get inputs from the text field
+            String[] inputResults = pctgYear.getText().split(",");
+            //clear the screen and print the results
+            resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
+            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + pctgYear.getText(), "Chalkduster", FontWeight.BOLD, 20));
+           
+            //get all of the farms and print out their maximums for the month
+            for(int i = 0; i < 5; ++i)
+              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            
+            //change the scene to the results scene
+            panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
+          }catch(ArrayIndexOutOfBoundsException e) {
+            //wrong format was entered
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            alert.showAndWait();
+          }
           });
 		
 		

@@ -26,8 +26,26 @@ public class DataManager {
 		fmng = new FileManager();
 	}
 
+	
+	/**
+     * Reads the specified file and parses the data and inserts the data into the data structures in the program
+     * 
+     * @param inputFile the input file to read from
+     * @return true if the file was read correctly
+     * @throws IOException if the file is not able to be read
+     */
 	public boolean readFile(String inputFile) throws IOException {
 		return fmng.readFile(inputFile, factory);
+	}
+	
+	
+	/**
+     * Gets the factory
+     * 
+     * @return the cheese factory
+     */
+	public CheeseFactory getCheeseFactory() {
+	  return factory;
 	}
 
 	/**
