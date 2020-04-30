@@ -141,21 +141,21 @@ public class GUI extends Application {
 		results.add(createLabel("Average All Farms: ", "Times New Roman", FontWeight.BOLD,
 				15), 0, 5);
 		results.add(
-				createLabel("Percentage:    ", "Times New Roman", FontWeight.BOLD, 15), 0,
+				createLabel("Percentage For Month", "Times New Roman", FontWeight.BOLD, 15), 0,
 				6);
-		results.add(createLabel("Percentage For Month:", "Times New Roman",
-				FontWeight.BOLD, 15), 0, 7);
 		results.add(createLabel("Percentage For Year:", "Times New Roman",
-				FontWeight.BOLD, 15), 0, 8);
+				FontWeight.BOLD, 15), 0, 7);
+//		results.add(createLabel("Percentage For Year:", "Times New Roman",
+//				FontWeight.BOLD, 15), 0, 8);
 
-		TextField maxMonthTF = new TextField("Enter farmID,year:");
-		TextField maxAllFarmsTF = new TextField("Enter month,year:");
-		TextField minMonthTF = new TextField("Enter farmID,year:");
-		TextField minAllFarmsTF = new TextField("Enter month,year:");
-		TextField avgMonthTF = new TextField("Enter farmID,year:");
-		TextField avgAllFarmsTF = new TextField("Enter month,year:");
-		TextField pctgMonth = new TextField("Enter Month:");
-		TextField pctgYear = new TextField("Enter Year:");
+		TextField maxMonthTF = new TextField("Enter: FarmID,Year");
+		TextField maxAllFarmsTF = new TextField("Enter: Month,Year");
+		TextField minMonthTF = new TextField("Enter: FarmID,Year");
+		TextField minAllFarmsTF = new TextField("Enter: Month,Year");
+		TextField avgMonthTF = new TextField("Enter: FarmID,Year");
+		TextField avgAllFarmsTF = new TextField("Enter: Month,Year");
+		TextField pctgMonth = new TextField("Enter: Month,Year");
+		TextField pctgYear = new TextField("Enter: Year");
 		//Button pctgTotal = new Button("Farms' Percentage of Total");
 
 		results.add(maxMonthTF, 1, 0);
@@ -327,6 +327,10 @@ public class GUI extends Application {
 
 		
 		
+		
+		//ArrayIndexOutOfBoundsException | NumberFormatException | IllegalNullKeyException | KeyNotFoundException e
+		
+		
 		//box to display resutls in
         VBox resultsVBox = new VBox();
         //button to return to dashboard
@@ -359,7 +363,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"FarmID,Year\"");
             alert.showAndWait();
           }
           });
@@ -384,7 +388,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
             alert.showAndWait();
           }
         });
@@ -414,7 +418,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"FarmID,Year\"");
             alert.showAndWait();
           }
           });
@@ -439,7 +443,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
             alert.showAndWait();
           }
           });
@@ -469,7 +473,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //entered format wrong
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"FarmID,Year\"");
             alert.showAndWait();
           }
           });
@@ -494,7 +498,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
             alert.showAndWait();
           }
           });
@@ -516,7 +520,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
             alert.showAndWait();
           }
           });
@@ -525,10 +529,10 @@ public class GUI extends Application {
         //page for percentage of total for a year for all farms
           try {
             //get inputs from the text field
-            String[] inputResults = pctgYear.getText().split(",");
+            String inputResults = pctgYear.getText();
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
-            resultsVBox.getChildren().add(createLabel("Results for Percentage of Total Weight for Month: " + pctgYear.getText(), "Chalkduster", FontWeight.BOLD, 20));
+            resultsVBox.getChildren().add(createLabel("Results for Percentage of Total Weight for Year: " + pctgYear.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
            
             
@@ -538,7 +542,7 @@ public class GUI extends Application {
             primaryStage.show();
           }catch(ArrayIndexOutOfBoundsException e) {
             //wrong format was entered
-            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"farmID,year\"");
+            Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Year\"");
             alert.showAndWait();
           }
           });
