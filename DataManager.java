@@ -21,17 +21,18 @@ public class DataManager {
 		}
 	}
 
-	public DataManager(String[] inputFiles) throws IOException {
+	public DataManager() {
 		factory = new CheeseFactory();
 		fmng = new FileManager();
-		// initialize cheese factory using data in the files
-		for (String inputFile : inputFiles)
-			fmng.readFile(inputFile, factory);
+	}
+
+	public boolean readFile(String inputFile) throws IOException {
+		return fmng.readFile(inputFile, factory);
 	}
 
 	/**
 	 * This returns a vector of length 12 representing the average weight of milk
-	 * produced by all farms (in the year specified)
+	 * produced by all farms in each month of the year
 	 * 
 	 * @param year
 	 * @return
@@ -44,6 +45,33 @@ public class DataManager {
 			vecAddition(monthlyAvgVec, farmList.get(i).monthlyAvg(year));
 		}
 		return monthlyAvgVec;
+	}
+
+	/**
+	 * This returns a vector of length 12 representing the weight of milk produced
+	 * by all farms in each month of the year
+	 * 
+	 * @param year
+	 * @return
+	 */
+	public double[] getMonthlySumVec(int year) {
+		int numberOfFarms = factory.getFactorySize();
+		ArrayList<Farm> farmList = factory.getFarmList();
+		double[] monthlySumVec = new double[12];
+		for (int i = 0; i < numberOfFarms; i++) {
+			double[] monthVec = intToDouble(farmList.get(i).monthlySum(year));
+			vecAddition(monthlySumVec, monthVec);
+		}
+		return monthlySumVec;
+	}
+
+	private double[] intToDouble(int[] array) {
+		int size = array.length;
+		double[] doubleArr = new double[size];
+		for (int i = 0; i < size; i++) {
+			doubleArr[i] = array[i];
+		}
+		return doubleArr;
 	}
 
 	/**
@@ -84,14 +112,22 @@ public class DataManager {
 		return farmReportByMonth;
 	}
 
-	public int getMonthlyMin(int year) {
-
-		return 0;
+	public double getMonthlyMin(int year) {
+		double[] monthlyReport = getMonthlySumVec(year);
+		double monthlyMin = Double.MAX_VALUE;
+		for (int i = 0; i < 12; i++)
+			if (monthlyReport[i] < monthlyMin)
+				monthlyMin = monthlyReport[i];
+		return monthlyMin;
 	}
 
-	public int getMonthlyMax(int year) {
-
-		return 0;
+	public double getMonthlyMax(int year) {
+		double[] monthlyReport = getMonthlySumVec(year);
+		double monthlyMax = Double.MIN_VALUE;
+		for (int i = 0; i < 12; i++)
+			if (monthlyReport[i] > monthlyMax)
+				monthlyMax = monthlyReport[i];
+		return monthlyMax;
 	}
 
 	public int getMonthlyAverageForFarm() {
@@ -128,4 +164,9 @@ public class DataManager {
 
 		return 0;
 	}
+
+	public int getSingleData(String farmID, int year, int month, int day) {
+		return factory.getSingleData(farmID, year, month, day);
+	}
+
 }
