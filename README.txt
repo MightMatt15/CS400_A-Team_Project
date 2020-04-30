@@ -1,5 +1,4 @@
 # CS400_A-Team_Project
-<<<<<<< HEAD
 Milk Weight
 =======
 Ateam 103
