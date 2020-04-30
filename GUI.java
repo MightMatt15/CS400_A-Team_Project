@@ -242,6 +242,13 @@ public class GUI extends Application {
 		Button dashboard1 = new Button("Go to Dashboard");
 		panel3.setRight(dashboard1);
 		BorderPane.setAlignment(dashboard1, Pos.BOTTOM_RIGHT);
+		
+		// button to go back to dashboard from the results scene
+        Button dashboard2 = new Button("Go to Dashboard");
+        BorderPane.setAlignment(dashboard2, Pos.BOTTOM_RIGHT);
+		
+		
+		//input page
 		VBox input = new VBox();
 		input.getChildren().add(createLabel("Please input file location Below",
 				"Chalkduster", FontWeight.BOLD, 20));
@@ -291,6 +298,10 @@ public class GUI extends Application {
 			primaryStage.setScene(mainScene);
 			primaryStage.show();
 		});
+		dashboard2.setOnAction(e -> {
+          primaryStage.setScene(mainScene);
+          primaryStage.show();
+      });
 
 		// read the input file when a user types in a filename
 		inputTextField.setOnAction(e -> {
@@ -316,9 +327,11 @@ public class GUI extends Application {
 
 		
 		
-		
+		//box to display resutls in
         VBox resultsVBox = new VBox();
-
+        //button to return to dashboard
+        panelResults.setRight(dashboard2);
+        BorderPane.setAlignment(dashboard2, Pos.BOTTOM_RIGHT);
 		
 		//results
         maxMonthTF.setOnAction(event -> {
@@ -329,7 +342,7 @@ public class GUI extends Application {
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
-            resultsVBox.getChildren().add(createLabel("January Max: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("January Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("February Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("March Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("April Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
@@ -340,7 +353,7 @@ public class GUI extends Application {
             resultsVBox.getChildren().add(createLabel("September Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("October Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("November Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("December Max: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("December Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
@@ -361,8 +374,9 @@ public class GUI extends Application {
             resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
             //get all of the farms and print out their maximums for the month
-            for(int i = 0; i < 5; ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " +   ": ", "Times New Roman", FontWeight.BOLD, 15));
+            List<Farm> list = dataManager.getCheeseFactory().getFarmList();
+            for(int i = 0; i < list.size(); ++i)
+            resultsVBox.getChildren().add(createLabel("Farm: " + list.get(i).getFarmID() +  ": " + "", "Times New Roman", FontWeight.BOLD, 15));
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
@@ -415,8 +429,9 @@ public class GUI extends Application {
             resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + minAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
             //get all of the farms and print out their maximums for the month
-            for(int i = 0; i < 5; ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            List<Farm> list = dataManager.getCheeseFactory().getFarmList();
+            for(int i = 0; i < list.size(); ++i)
+            resultsVBox.getChildren().add(createLabel("Farm: " + list.get(i).getFarmID() +  ": " + "", "Times New Roman", FontWeight.BOLD, 15));
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
@@ -430,14 +445,14 @@ public class GUI extends Application {
           });
         
         avgMonthTF.setOnAction(event -> {
-        //page for results
+        //page for avgerage for each month for a farm
           try {
             //get inputs from the text field
             String[] inputResults = avgMonthTF.getText().split(",");
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Average Weights for " + avgMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
-            resultsVBox.getChildren().add(createLabel("January Avg: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("January Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("February Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("March Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("April Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
@@ -448,7 +463,7 @@ public class GUI extends Application {
             resultsVBox.getChildren().add(createLabel("September Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("October Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
             resultsVBox.getChildren().add(createLabel("November Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("December Avg: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("December Avg: " + "", "Times New Roman", FontWeight.BOLD, 15));
             panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
@@ -463,14 +478,15 @@ public class GUI extends Application {
           //page for avg 
           try {
             //get inputs from the text field
-            String[] inputResults =avgAllFarmsTF.getText().split(",");
+            String[] inputResults = avgAllFarmsTF.getText().split(",");
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + avgAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
             //get all of the farms and print out their maximums for the month
-            for(int i = 0; i < 5; ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            List<Farm> list = dataManager.getCheeseFactory().getFarmList();
+            for(int i = 0; i < list.size(); ++i)
+            resultsVBox.getChildren().add(createLabel("Farm: " + list.get(i).getFarmID() +  ": " + "", "Times New Roman", FontWeight.BOLD, 15));
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
@@ -484,17 +500,15 @@ public class GUI extends Application {
           });
         
         pctgMonth.setOnAction(event -> {
-        //page for percentage each month for all farms
+        //page for percentage of total for a month for all farms
           try {
             //get inputs from the text field
             String[] inputResults = pctgMonth.getText().split(",");
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
-            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + pctgMonth.getText(), "Chalkduster", FontWeight.BOLD, 20));
+            resultsVBox.getChildren().add(createLabel("Results for Percentage of Total Weight for Month: " + pctgMonth.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
-            //get all of the farms and print out their maximums for the month
-            for(int i = 0; i < 5; ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
@@ -508,17 +522,15 @@ public class GUI extends Application {
           });
         
         pctgYear.setOnAction(event -> {
-        //page for percentage for a year for all farms
+        //page for percentage of total for a year for all farms
           try {
             //get inputs from the text field
             String[] inputResults = pctgYear.getText().split(",");
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
-            resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + pctgYear.getText(), "Chalkduster", FontWeight.BOLD, 20));
+            resultsVBox.getChildren().add(createLabel("Results for Percentage of Total Weight for Month: " + pctgYear.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
-            //get all of the farms and print out their maximums for the month
-            for(int i = 0; i < 5; ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+           
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
