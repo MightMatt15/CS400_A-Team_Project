@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class DataManager {
 
-	private CheeseFactory factory;
+	public CheeseFactory factory;
 	private FileManager fmng;
 
 	/**
@@ -26,26 +26,8 @@ public class DataManager {
 		fmng = new FileManager();
 	}
 
-	
-	/**
-     * Reads the specified file and parses the data and inserts the data into the data structures in the program
-     * 
-     * @param inputFile the input file to read from
-     * @return true if the file was read correctly
-     * @throws IOException if the file is not able to be read
-     */
 	public boolean readFile(String inputFile) throws IOException {
 		return fmng.readFile(inputFile, factory);
-	}
-	
-	
-	/**
-     * Gets the factory
-     * 
-     * @return the cheese factory
-     */
-	public CheeseFactory getCheeseFactory() {
-	  return factory;
 	}
 
 	/**
@@ -132,37 +114,125 @@ public class DataManager {
 
 	public double getMonthlyMin(int year) {
 		double[] monthlyReport = getMonthlySumVec(year);
-		double monthlyMin = Double.MAX_VALUE;
-		for (int i = 0; i < 12; i++)
-			if (monthlyReport[i] < monthlyMin)
-				monthlyMin = monthlyReport[i];
-		return monthlyMin;
+		return getArrayMinValue(monthlyReport);
 	}
 
 	public double getMonthlyMax(int year) {
 		double[] monthlyReport = getMonthlySumVec(year);
-		double monthlyMax = Double.MIN_VALUE;
+		return getArrayMaxValue(monthlyReport);
+	}
+
+	private double getArrayMinValue(double[] array) {
+		double min = Double.MAX_VALUE;
 		for (int i = 0; i < 12; i++)
-			if (monthlyReport[i] > monthlyMax)
-				monthlyMax = monthlyReport[i];
-		return monthlyMax;
+			if (array[i] < min)
+				min = array[i];
+		return min;
 	}
 
-	public int getMonthlyAverageForFarm() {
+	private double getArrayMaxValue(double[] array) {
+		double max = -1;
+		for (int i = 0; i < 12; i++)
+			if (array[i] > max)
+				max = array[i];
+		return max;
+	}
 
+	/**
+	 * Return the monthly report(monthly average) of a farm in the give year.
+	 * 
+	 * @param farmID farm identifier
+	 * @param year
+	 * @return a vector of length 12 representing the average amount of milk
+	 *         produced by this farm in every month of the year
+	 */
+	public double[] getMonthlyAverageForFarm(String farmID, int year) {
+		ArrayList<Farm> listOfFactories = factory.getFarmList();
+		for (Farm f : listOfFactories) {
+			if (f.getFarmID().equals(farmID))
+				return f.monthlyAvg(year);
+		}
+		return null; // the farm with the specified identifier was not found
+	}
+
+	/**
+	 * Return the monthly report(monthly sum) of a farm in the give year.
+	 * 
+	 * @param farmID farm identifier
+	 * @param year
+	 * @return a vector of length 12 representing the total amount of milk produced
+	 *         by this farm every month of the year
+	 */
+	public int[] getMonthlySumForFarm(String farmID, int year) {
+		ArrayList<Farm> listOfFactories = factory.getFarmList();
+		for (Farm f : listOfFactories) {
+			if (f.getFarmID().equals(farmID))
+				return f.monthlySum(year);
+		}
+		return null; // the farm with the specified identifier was not found
+	}
+
+	public int getMonthlyMinForFarm(String farmID, int year) {
+		double[] monthlySumForFarm = intToDouble(getMonthlySumForFarm(farmID, year));
+		return (int) getArrayMinValue(monthlySumForFarm);
+
+	}
+
+	public int getMonthlyMaxForFarm(String farmID, int year) {
+		double[] monthlySumForFarm = intToDouble(getMonthlySumForFarm(farmID, year));
+		return (int) getArrayMaxValue(monthlySumForFarm);
+	}
+
+		/**
+	 * Return the percentage of milk that a farm contributed(with respect to all
+	 * farms) on monthly basis.
+	 * 
+	 * @param year
+	 * @param month
+	 * @return a vector of length 12 representing the percentage in each month
+	 */
+	public double[] percentageVectorMonth(String farmID, int year) {
+		double[] allFarmsVec = getMonthlySumVec(year);
+		int[] farmVec = getMonthlySumForFarm(farmID, year);
+		return vecDivision(intToDouble(farmVec), allFarmsVec);
+	}
+
+	private double[] vecDivision(double[] numerator, double[] denominator) {
+		if (numerator.length != denominator.length)
+			return null;
+		int vecLength = numerator.length;
+		double[] ratio = new double[vecLength];
+		for (int i = 0; i < vecLength; i++) {
+			ratio[i] = numerator[i] / denominator[i];
+		}
+		return ratio;
+	}
+
+	/**
+	 * Return the percentage of milk that a farm contributed(with respect to all
+	 * farms) in the year specified.
+	 * 
+	 * @param year
+	 * @return
+	 */
+	public double percentageVectorYear(String farmID, int year) {
+		int annualSum_All = factory.annualSumAllFarms(year);
+		Farm farm = factory.getFarm(farmID);
+		double annualSum_farm = farm.annualSum(year);
+		return annualSum_farm / annualSum_All;
+	}
+
+	/**
+	 * Return the percentage of milk that a farm contributed(with respect to all
+	 * farms) throughout the time.
+	 * 
+	 * @return
+	 */
+	public double percentageVectorAllTime(String farmID) {
 		return 0;
 	}
-
-	public int getMonthlyMinForFarm() {
-
-		return 0;
-	}
-
-	public int getMonthlyMaxForFarm() {
-
-		return 0;
-	}
-
+	
+	
 	public int getDataSortedByField() {
 
 		return 0;
@@ -185,6 +255,23 @@ public class DataManager {
 
 	public int getSingleData(String farmID, int year, int month, int day) {
 		return factory.getSingleData(farmID, year, month, day);
+	}
+
+	public void writeFarmReport(String farmID, int year) {
+		for (int i = 0; i < farmMonthlyReport(year).length; i++) {
+			if (farmMonthlyReport(year)[i].farmID.equals(farmID)) {
+				System.out.println(farmMonthlyReport(year)[i]);
+			}
+		}
+	}
+
+	/**
+	 * Gets the factory
+	 * 
+	 * @return the cheese factory
+	 */
+	public CheeseFactory getCheeseFactory() {
+		return factory;
 	}
 
 }
