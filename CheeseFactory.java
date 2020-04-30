@@ -31,6 +31,7 @@ public class CheeseFactory {
 		if (farm == null) {
 			milkDataFromFarms.add(new Farm(farmID));
 		}
+	    farm = getFarm(farmID);
 		farm.insertMilkForDate(year, month, day, weight);
 	}
 

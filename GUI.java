@@ -173,6 +173,8 @@ public class GUI extends Application {
 
 		// results screen
 		BorderPane panelResults = new BorderPane();
+		//change the background color
+        panelResults.setBackground(background);
 
 		Scene resultsScene = new Scene(panelResults, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -325,18 +327,18 @@ public class GUI extends Application {
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
-            resultsVBox.getChildren().add(createLabel("January Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("February Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("March Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("April Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("May Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("June Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("July Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("August Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("September Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("October Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("November Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("December Max: " + dataManager.getMonthlyMax(), "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("January Max: " + "max", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("February Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("March Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("April Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("May Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("June Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("July Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("August Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("September Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("October Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("November Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("December Max: " + "max", "Times New Roman", FontWeight.BOLD, 15));
             panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
@@ -356,9 +358,8 @@ public class GUI extends Application {
             resultsVBox.getChildren().add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
             //get all of the farms and print out their maximums for the month
-            ArrayList<Farm> farms = cheeseFactory.getFarmList();
-            for(int i = 0; i < farms.size(); ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + farms.get(i).getFarmID() + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            for(int i = 0; i < 5; ++i)
+              resultsVBox.getChildren().add(createLabel("Farm: " + dataManager + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
@@ -378,18 +379,18 @@ public class GUI extends Application {
             //clear the screen and print the results
             resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
             resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + minMonthTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
-            resultsVBox.getChildren().add(createLabel("January Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("February Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("March Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("April Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("May Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("June Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("July Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("August Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("September Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("October Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("November Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
-            resultsVBox.getChildren().add(createLabel("December Max: " + dataManager.getMonthlyMin(), "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("January Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("February Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("March Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("April Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("May Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("June Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("July Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("August Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("September Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("October Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("November Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
+            resultsVBox.getChildren().add(createLabel("December Max: " + "", "Times New Roman", FontWeight.BOLD, 15));
             panelResults.setCenter(resultsVBox);
             primaryStage.setScene(resultsScene);
             primaryStage.show();
@@ -409,9 +410,8 @@ public class GUI extends Application {
             resultsVBox.getChildren().add(createLabel("Results for Minimum Weights for " + maxAllFarmsTF.getText(), "Chalkduster", FontWeight.BOLD, 20));
            
             //get all of the farms and print out their maximums for the month
-            ArrayList<Farm> farms = cheeseFactory.getFarmList();
-            for(int i = 0; i < farms.size(); ++i)
-              resultsVBox.getChildren().add(createLabel("Farm: " + farms.get(i).getFarmID() + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
+            for(int i = 0; i < 5; ++i)
+              resultsVBox.getChildren().add(createLabel("Farm: " + ": "+ dataManager.getMonthlyMaxForFarm(), "Times New Roman", FontWeight.BOLD, 15));
             
             //change the scene to the results scene
             panelResults.setCenter(resultsVBox);
