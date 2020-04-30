@@ -409,8 +409,8 @@ public class Farm {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null) {
 			double[] monthlyAvg = new double[12];
-			for(int i = 0; i < 12; i++) {
-				monthlyAvg[i] = yearReport.getMonthlyAverage(i);
+			for(int i = 1; i <= 12; i++) {
+				monthlyAvg[i - 1] = yearReport.getMonthlyAverage(i);
 			}
 			return monthlyAvg;
 		}
