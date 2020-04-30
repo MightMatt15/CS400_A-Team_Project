@@ -183,6 +183,56 @@ public class DataManager {
 		return (int) getArrayMaxValue(monthlySumForFarm);
 	}
 
+		/**
+	 * Return the percentage of milk that a farm contributed(with respect to all
+	 * farms) on monthly basis.
+	 * 
+	 * @param year
+	 * @param month
+	 * @return a vector of length 12 representing the percentage in each month
+	 */
+	public double[] percentageVectorMonth(String farmID, int year) {
+		double[] allFarmsVec = getMonthlySumVec(year);
+		int[] farmVec = getMonthlySumForFarm(farmID, year);
+		return vecDivision(intToDouble(farmVec), allFarmsVec);
+	}
+
+	private double[] vecDivision(double[] numerator, double[] denominator) {
+		if (numerator.length != denominator.length)
+			return null;
+		int vecLength = numerator.length;
+		double[] ratio = new double[vecLength];
+		for (int i = 0; i < vecLength; i++) {
+			ratio[i] = numerator[i] / denominator[i];
+		}
+		return ratio;
+	}
+
+	/**
+	 * Return the percentage of milk that a farm contributed(with respect to all
+	 * farms) in the year specified.
+	 * 
+	 * @param year
+	 * @return
+	 */
+	public double percentageVectorYear(String farmID, int year) {
+		int annualSum_All = factory.annualSumAllFarms(year);
+		Farm farm = factory.getFarm(farmID);
+		double annualSum_farm = farm.annualSum(year);
+		return annualSum_farm / annualSum_All;
+	}
+
+	/**
+	 * Return the percentage of milk that a farm contributed(with respect to all
+	 * farms) throughout the time.
+	 * 
+	 * @return
+	 */
+	public double percentageVectorAllTime(String farmID) {
+		return 0;
+	}
+	
+	
 	public int getDataSortedByField() {
 
 		return 0;
