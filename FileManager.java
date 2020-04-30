@@ -10,41 +10,9 @@ public class FileManager {
 	public String inputFile;
 	public String outputFile;
 
-	private static String getMonth(int monthInt) {
-		String month = null;
-		if (monthInt == 1) {
-			month = "January";
-		} else if (monthInt == 2) {
-			month = "February";
-		} else if (monthInt == 3) {
-			month = "March";
-		} else if (monthInt == 4) {
-			month = "April";
-		} else if (monthInt == 5) {
-			month = "May";
-		} else if (monthInt == 6) {
-			month = "June";
-		} else if (monthInt == 7) {
-			month = "July";
-		} else if (monthInt == 8) {
-			month = "August";
-		} else if (monthInt == 9) {
-			month = "September";
-		} else if (monthInt == 10) {
-			month = "October";
-		} else if (monthInt == 11) {
-			month = "November";
-		} else if (monthInt == 12) {
-			month = "December";
-		}
-
-		return month;
-
-	}
 
 	public boolean readFile(String inputFile, CheeseFactory myFactory) throws IOException {
 		File file = null;
-		// this.inputFile = inputFile;
 		file = new File(inputFile);
 		Scanner realFile = new Scanner(file);
 
@@ -128,8 +96,9 @@ public class FileManager {
 
 	}
 
-	public boolean writeToFile() {
+	public boolean writeToFile(String farmID, int year, CheeseFactory factory) {
 
+	  
 		return false;
 	}
 
