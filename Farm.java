@@ -203,11 +203,12 @@ public class Farm {
 	 * @param yEnd   year of ending date
 	 * @param mEnd   month of ending date
 	 * @param dEnd   day of ending date
-	 * @return total amount of milk
+	 * @return a vector of length 2: vec[0]: sum of weight within this range; vec[1]: time span (in days)
 	 */
-	public int sumWithinRange(int yStart, int mStart, int dStart, int yEnd, int mEnd,
+	public int[] sumWithinRange(int yStart, int mStart, int dStart, int yEnd, int mEnd,
 			int dEnd) {
-		int sum = 0;
+		int[] vec = new int[2]; // vec[0]: sum of weight within this range; vec[1]: time
+								// span (in days)
 		int[] nextDate;
 		annualData year = null;
 
@@ -219,13 +220,39 @@ public class Farm {
 				dStart = 1;
 				continue;
 			}
-			sum += year.getData(mStart, dStart);
+			vec[0] += year.getData(mStart, dStart);
 			nextDate = nextDate(yStart, mStart, dStart); // increment the date
 			yStart = nextDate[0];
 			mStart = nextDate[1];
 			dStart = nextDate[2];
+			if (!sameDate(mStart, dStart, 2, 30) && !sameDate(mStart, dStart, 2, 31)
+					&& !sameDate(mStart, dStart, 4, 31)
+					&& !sameDate(mStart, dStart, 6, 31)
+					&& !sameDate(mStart, dStart, 9, 31)
+					&& !sameDate(mStart, dStart, 11, 31)
+					&& (yStart % 4 != 0 ? !sameDate(mStart, dStart, 2, 29) : true))
+				// if the year is not leap year, the date cannot be Feb. 29
+				vec[1]++;
 		}
-		return sum;
+		return vec;
+	}
+
+	/**
+	 * Calculate the average amount of milk produced in this farm during a certain
+	 * period. Starting date must be earlier than ending date.
+	 * 
+	 * @param yStart year of starting date
+	 * @param mStart month of starting date
+	 * @param dStart day of starting date
+	 * @param yEnd   year of ending date
+	 * @param mEnd   month of ending date
+	 * @param dEnd   day of ending date
+	 * @return average amount of milk per day
+	 */
+	public double avgWithinRange(int yStart, int mStart, int dStart, int yEnd, int mEnd,
+			int dEnd) {
+		int[] vec = sumWithinRange(yStart, mStart, dStart, yEnd, mEnd, dEnd);
+		return (double) vec[0] / vec[1];
 	}
 
 	/**
