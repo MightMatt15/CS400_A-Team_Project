@@ -14,9 +14,7 @@ public class Main {
     GUI gui = new GUI();
     try {
       gui.start(new Stage());
-      
-      // testing:
-      			// load 2019 January Data
+ 			// load 2019 January Data
 			System.out.println(mng.readFile(
 					"/Users/zlei/Documents/workspace_Eclipse/milkweight/application/2019-1.txt"));
 
@@ -87,27 +85,27 @@ public class Main {
 
 			// test percentages //
 			System.out.println("Farm 0 percentage 2019 all year: "
-					+ mng.percentageVectorYear("Farm 0", 2019));
+					+ mng.percentageYearForFarm("Farm 0", 2019));
 			System.out.println("Farm 1 percentage 2019 all year: "
-					+ mng.percentageVectorYear("Farm 1", 2019));
+					+ mng.percentageYearForFarm("Farm 1", 2019));
 			System.out.println("Farm 2 percentage 2019 all year: "
-					+ mng.percentageVectorYear("Farm 2", 2019));
+					+ mng.percentageYearForFarm("Farm 2", 2019));
 
 			System.out.println("Farm 0 percentage 2019 by month: "
-					+ Arrays.toString(mng.percentageVectorMonth("Farm 0", 2019)));
+					+ Arrays.toString(mng.percentageVectorMonthForFarm("Farm 0", 2019)));
 			System.out.println("Farm 1 percentage 2019 by month: "
-					+ Arrays.toString(mng.percentageVectorMonth("Farm 1", 2019)));
+					+ Arrays.toString(mng.percentageVectorMonthForFarm("Farm 1", 2019)));
 			System.out.println("Farm 2 percentage 2019 by month: "
-					+ Arrays.toString(mng.percentageVectorMonth("Farm 2", 2019)));
+					+ Arrays.toString(mng.percentageVectorMonthForFarm("Farm 2", 2019)));
 			
 			System.out.println("getPercentageInRange(2019, Jan. percentage): "
-					+ Arrays.toString(mng.getPercentageInRange(2019, 1, 1, 2019, 1, 31)));
+					+ Arrays.toString(mng.getPercentageInRangeAllFarms(2019, 1, 1, 2019, 1, 31)));
 			
 			System.out.println("getPercentageInRange(2019, Feb. percentage): "
-					+ Arrays.toString(mng.getPercentageInRange(2019, 2, 1, 2019, 2, 28)));
+					+ Arrays.toString(mng.getPercentageInRangeAllFarms(2019, 2, 1, 2019, 2, 28)));
 			
 			System.out.println("getPercentageInRange(2019, whole year percentage): "
-					+ Arrays.toString(mng.getPercentageInRange(2019, 1, 1, 2019, 12, 31)));
+					+ Arrays.toString(mng.getPercentageInRangeAllFarms(2019, 1, 1, 2019, 12, 31)));
 
 			System.out.println("2019.01.01 : 2019.12.31 [farm 0 , farm 1, farm 2]: "
 					+ Arrays.toString(
@@ -129,7 +127,7 @@ public class Main {
 
 			System.out.println("getMonthlySumForFarm(Farm 2, 2019): "
 					+ Arrays.toString(mng.getMonthlySumForFarm("Farm 2", 2019)));
-      
+			
     } catch (Exception e) {
       System.out.println("GUI failed to start");
     }
