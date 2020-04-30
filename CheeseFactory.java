@@ -15,6 +15,14 @@ public class CheeseFactory {
 		return milkDataFromFarms;
 	}
 	
+		public int annualSumAllFarms(int year) {
+		int annualSum = 0;
+		for(Farm f : milkDataFromFarms) {
+			annualSum += f.annualSum(year);
+		}
+		return annualSum;
+	}
+	
 	/**
 	 * Inserts a single data point on a given day
 	 * 
