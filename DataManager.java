@@ -21,12 +21,13 @@ public class DataManager {
 		}
 	}
 
-	public DataManager(String[] inputFiles) throws IOException {
+	public DataManager() {
 		factory = new CheeseFactory();
 		fmng = new FileManager();
-		// initialize cheese factory using data in the files
-		for (String inputFile : inputFiles)
-			fmng.readFile(inputFile, factory);
+	}
+
+	public boolean readFile(String inputFile) throws IOException {
+		return fmng.readFile(inputFile, factory);
 	}
 
 	/**
@@ -163,4 +164,9 @@ public class DataManager {
 
 		return 0;
 	}
+
+	public int getSingleData(String farmID, int year, int month, int day) {
+		return factory.getSingleData(farmID, year, month, day);
+	}
+
 }
