@@ -295,7 +295,7 @@ public class DataManager {
 		int sum = 0;
 		ArrayList<Farm> listOfFactories = factory.getFarmList();
 		for (Farm f : listOfFactories) {
-			sum += f.sumWithinRange(yStart, mStart, dStart, yEnd, mEnd, dEnd)[1];
+			sum += f.sumWithinRange(yStart, mStart, dStart, yEnd, mEnd, dEnd)[0];
 		}
 		return sum;
 	}
@@ -308,7 +308,7 @@ public class DataManager {
 		int i = 0;
 		for (Farm f : listOfFactories) {
 			sumInRangeEachFarm[i++] = (double) f.sumWithinRange(yStart, mStart, dStart,
-					yEnd, mEnd, dEnd)[1];
+					yEnd, mEnd, dEnd)[0];
 		}
 		return sumInRangeEachFarm;
 	}
