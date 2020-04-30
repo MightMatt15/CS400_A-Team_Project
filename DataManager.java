@@ -124,7 +124,7 @@ public class DataManager {
         if(farmMonthlyReport(year)[i].farmID.equals(farmID)) {
           //System.out.println(farmMonthlyReport(year)[i].monthlyReport[2]);
           for(int j = 0; j < farmMonthlyReport(year)[i].monthlyReport.length; j++) {
-            writer.println("Month " + (j + 1) + " Weight: " + farmMonthlyReport(year)[i].monthlyReport[j]);
+            writer.println("Month " + (j + 1) + " Weight: " + farmMonthlyReport(year)[i].monthlyReport[j] + " Percent of total milk for month: " + percentageVectorMonth(farmID, year)[j]*100 + "%");
             
             
           }
@@ -233,7 +233,12 @@ public class DataManager {
         double[] ratio = new double[vecLength];
         for (int i = 0; i < vecLength; i++) {
             ratio[i] = numerator[i] / denominator[i];
+            
+            if(Double.isNaN(ratio[i])) {
+              ratio[i] = 0;
+            }
         }
+        
         return ratio;
     }
 
@@ -286,13 +291,7 @@ public class DataManager {
         return factory.getSingleData(farmID, year, month, day);
     }
 
-    public void writeFarmReport(String farmID, int year) {
-        for (int i = 0; i < farmMonthlyReport(year).length; i++) {
-            if (farmMonthlyReport(year)[i].farmID.equals(farmID)) {
-                System.out.println(farmMonthlyReport(year)[i]);
-            }
-        }
-    }
+    
 
     /**
      * Gets the factory
