@@ -96,6 +96,7 @@ public class DataManager {
   public void writeFarmReport(String farmID, int year, String path) throws IOException {
       FileWriter writer1 = new FileWriter(path);
       PrintWriter writer = new PrintWriter(writer1);
+      writer.println(farmID + "'s Farm Report:");
       for (int i = 0; i < farmMonthlyReport(year).length; i++) {
 
         if (farmMonthlyReport(year)[i].farmID.equals(farmID)) {
