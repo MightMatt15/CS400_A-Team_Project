@@ -1,3 +1,4 @@
+
 ///////////////////////////////////////////////////////////////////////////////
 // Title: FileManager.java
 // Files: CheeseFactory.java, DataManager.java, Farm.java, GUI.java
@@ -43,11 +44,11 @@ public class FileManager {
 
     try {
 
-      while (realFile.hasNextLine()) {
+      while (realFile.hasNextLine()) { // Read through entire file
 
         String currentLine = null;
-        currentLine = realFile.nextLine().toString();
-        if (currentLine.contains("date")) {
+        currentLine = realFile.nextLine().toString(); 
+        if (currentLine.contains("date")) { // Skip first line as it's just formatted data
 
         } else {
           String farmNumber = null;
@@ -56,48 +57,47 @@ public class FileManager {
           int year = 0;
           int weight = 0;
           StringBuilder myBuilder = new StringBuilder();
-          myBuilder.append(currentLine);
+          myBuilder.append(currentLine); // Transform first line into stringbuilder for ease of access
           try {
-            year = Integer.parseInt(myBuilder.substring(0, 4));
+            year = Integer.parseInt(myBuilder.substring(0, 4)); // Get year
           } catch (Exception e) {
-            year = 0;
+            year = 0; // If exception or invalid input set year to 0
           }
-          myBuilder.delete(0, 5);
-          if (myBuilder.substring(0, 2).contains("-")) {
+          myBuilder.delete(0, 5); // Delete year from stringbuilder
+          if (myBuilder.substring(0, 2).contains("-")) { // Find month separator
             try {
-              // month =
-              // getMonth(Integer.parseInt(myBuilder.substring(0,1)));
-              month = Integer.parseInt(myBuilder.substring(0, 1));
+              
+              month = Integer.parseInt(myBuilder.substring(0, 1)); // Get month and if invalid set to 0
               myBuilder.delete(0, 2);
             } catch (Exception e) {
               month = 0;
             }
           } else {
             try {
-              month = Integer.parseInt(myBuilder.substring(0, 2));
+              month = Integer.parseInt(myBuilder.substring(0, 2)); // Get month and if invalid set to 0
               myBuilder.delete(0, 3);
             } catch (Exception e) {
               month = 0;
             }
 
           }
-          if (myBuilder.substring(0, 2).contains(",")) {
+          if (myBuilder.substring(0, 2).contains(",")) { // Find day separator
             try {
-              day = Integer.parseInt(myBuilder.substring(0, 1));
+              day = Integer.parseInt(myBuilder.substring(0, 1)); // Get Day and if invalid set to 0
               myBuilder.delete(0, 2);
             } catch (Exception e) {
               day = 0;
             }
           } else {
             try {
-              day = Integer.parseInt(myBuilder.substring(0, 2));
+              day = Integer.parseInt(myBuilder.substring(0, 2));  // Get Day and if invalid set to 0
               myBuilder.delete(0, 3);
             } catch (Exception e) {
               day = 0;
             }
           }
 
-          farmNumber = myBuilder.substring(0, myBuilder.indexOf(","));
+          farmNumber = myBuilder.substring(0, myBuilder.indexOf(",")); // Get weigh separator and set weight
           myBuilder.delete(0, myBuilder.indexOf(",") + 1);
           try {
             weight = Integer.parseInt(myBuilder.toString());
@@ -114,7 +114,7 @@ public class FileManager {
     } finally {
 
       if (realFile != null) {
-        realFile.close();
+        realFile.close(); // Close file
       }
     }
 
