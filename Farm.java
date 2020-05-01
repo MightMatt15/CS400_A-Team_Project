@@ -1,15 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////
+// Title: Farm.java
+// Files: CheeseFactory.java, DataManager.java, FileManager.java, GUI.java
+//        
+// Course: CS 400, SP2020
+//
+// Authors: Adam Pryor        Matt McNaught		  Zhiyuan Lei
+// Email:   adpryor@wisc.edu  mmcnaught@wisc.edu  zlei23@wisc.edu
+// Lecturer's Name: Debra Deppeler
+//
+/////////////////////////// OTHER SOURCES OF HELP //////////////////////////////
+// None
+////////////////////////////////////////////////////////////////////////////////
+
 package application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * This class stores the milk weight data of a farm and manages users' requests
- * for the data.
- *
+ * This class represents a farm and stores its milk weight data and manages
+ * users' requests for data.
  */
 public class Farm {
-	private String farmID; // farm ID can be any string
+	// farm ID can be any string
+	private String farmID;
+	// list of annual data(i.e data of different years)
 	private ArrayList<annualData> yearList;
 
 	/**
@@ -23,21 +38,23 @@ public class Farm {
 		yearList = new ArrayList<annualData>();
 	}
 
+////////////////////////////////////////////////////////////////////////////////
+///////////////////////// Start of class annualData ////////////////////////////
 	/**
 	 * This class manages all data of this farm object in a specific year.
-	 *
 	 */
 	private class annualData {
-		private int year;
+		private int year; // year of the data
 		private int annualSum;
-		private int[][] annualData; // 2-d array (12, 31) to representing the data of the
-									// year
-		private int[] monthlyData; // some of weight of each month during the year
-		private int[] maxDays;
-		private int[] minDays;
+		// 2-d array (12, 31) to representing the data of the year
+		private int[][] annualData;
+		// some of weight of each month during the year
+		private int[] monthlyData;
+		private int[] maxDays; // maximum daily production for each month of the year
+		private int[] minDays; // minimum daily production for each month of the year
 
 		/**
-		 * Constructor
+		 * Constructor with a specified year.
 		 */
 		private annualData(int year) {
 			this.year = year;
@@ -85,11 +102,23 @@ public class Farm {
 			updateMaxMinDays(month, weight);
 		}
 
+		/**
+		 * Return the average milk production for the year.
+		 * 
+		 * @param year year
+		 * @return annual average weight
+		 */
 		private double getAnnualAverage(int year) {
 			int numberofDays = (year % 4 == 0) ? 366 : 365;
 			return (double) annualSum / numberofDays;
 		}
 
+		/**
+		 * Return the average milk production for the month.
+		 * 
+		 * @param month month
+		 * @return month average weight
+		 */
 		private double getMonthlyAverage(int month) {
 			int numberofDays = 0;
 			switch (month) {
@@ -179,6 +208,9 @@ public class Farm {
 			return year;
 		}
 
+		/**
+		 * Clear all data related to this year.
+		 */
 		private void clearAll() {
 			annualSum = 0;
 			annualData = new int[12][31];
@@ -186,7 +218,9 @@ public class Farm {
 			maxDays = new int[12];
 			minDays = new int[12];
 		}
-	} // end of class annualData
+	}
+///////////////////////// End of class annualData //////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Inserts data for milk on a specific date given that all arguments are valid.
@@ -243,6 +277,7 @@ public class Farm {
 			yStart = nextDate[0];
 			mStart = nextDate[1];
 			dStart = nextDate[2];
+			// ignore invalid dates
 			if (!sameDate(mStart, dStart, 2, 30) && !sameDate(mStart, dStart, 2, 31)
 					&& !sameDate(mStart, dStart, 4, 31)
 					&& !sameDate(mStart, dStart, 6, 31)
@@ -325,7 +360,6 @@ public class Farm {
 	 */
 	private int[] nextDate(int year, int month, int day) {
 		int[] nextDate = new int[3];
-
 		if ((day + 1) > 31)
 			if ((month + 1) > 12) {
 				// year crossing
@@ -339,21 +373,19 @@ public class Farm {
 			}
 		else
 			day++;
-
 		nextDate[0] = year;
 		nextDate[1] = month;
 		nextDate[2] = day;
-
 		return nextDate;
 	}
 
 	/**
 	 * Compare 2 dates.
 	 * 
-	 * @param m1
-	 * @param d1
-	 * @param m2
-	 * @param d2
+	 * @param m1 month of date 1
+	 * @param d1 day of date 1
+	 * @param m2 month of date 2
+	 * @param d2 day of date 2
 	 * @return true if the 2 dates are the same; false otherwise
 	 */
 	private boolean sameDate(int m1, int d1, int m2, int d2) {
@@ -462,6 +494,12 @@ public class Farm {
 		return 0;
 	}
 
+	/**
+	 * Return the maximum daily amount for each month during the year.
+	 * 
+	 * @param year
+	 * @return maximum daily amount for each month during the year
+	 */
 	public int[] getMaxDays(int year) {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null)
@@ -470,6 +508,12 @@ public class Farm {
 			return new int[12];
 	}
 
+	/**
+	 * Return the minimum daily amount for each month during the year.
+	 * 
+	 * @param year
+	 * @return minimum daily amount for each month during the year
+	 */
 	public int[] getMinDays(int year) {
 		annualData yearReport = yearExists(year);
 		if (yearReport != null)
@@ -477,5 +521,4 @@ public class Farm {
 		else
 			return new int[12];
 	}
-
 }
