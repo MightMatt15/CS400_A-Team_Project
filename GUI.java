@@ -399,12 +399,27 @@ public class GUI extends Application {
             .add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
-        // get all of the farms and print out their maximums for the month
-        List<Farm> list = dataManager.getCheeseFactory().getFarmList();
-        for (int i = 0; i < list.size(); ++i)
-          resultsVBox.getChildren().add(createLabel("Farm: " + list.get(i).getFarmID() + ": " + "",
-              "Times New Roman", FontWeight.BOLD, 15));
+       //Setup pie chart
+        double myTotal = 0;
 
+        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+        
+        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          myTotal = myTotal + dataManager.getMaxDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
+       }
+       for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+         pieChartData.add(new PieChart.Data((dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  " + Math.round(dataManager.getMaxDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100 /myTotal)).toString() + "%", dataManager.getMaxDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100/myTotal));
+       }
+       
+       
+       final PieChart chart = new PieChart(pieChartData);
+       chart.setTitle("Maximum of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1) +  " in year: " + (inputResults[1]));
+       chart.setLegendVisible(false);
+        
+        
+        
+        
+        resultsVBox.getChildren().add(chart);
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
@@ -470,14 +485,10 @@ public class GUI extends Application {
       // page for min for all farms for a month
       try {
 
-        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
-        
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          
-        }
-        
-        final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Imported Fruits");
+
+
+
+
         // get inputs from the text field
         String[] inputResults = minAllFarmsTF.getText().split(",");
         // clear the screen and print the results
@@ -486,12 +497,28 @@ public class GUI extends Application {
             .add(createLabel("Results for Minimum Weights for " + minAllFarmsTF.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
-        // get all of the farms and print out their maximums for the month
-        List<Farm> list = dataManager.getCheeseFactory().getFarmList();
-        for (int i = 0; i < list.size(); ++i)
-          resultsVBox.getChildren().add(createLabel("Farm: " + list.get(i).getFarmID() + ": " + "",
-              "Times New Roman", FontWeight.BOLD, 15));
+        //Setup pie chart
+      double myTotal = 0;
+
+        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+        
+        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          myTotal = myTotal + dataManager.getMinDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
+       }
+       for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+         pieChartData.add(new PieChart.Data((dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  " + Math.round(dataManager.getMinDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100 /myTotal)).toString() + "%", dataManager.getMinDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100/myTotal));
+       }
+       
+       
+       final PieChart chart = new PieChart(pieChartData);
+       chart.setTitle("Minimum of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1) +  " in year: " + (inputResults[1]));
+       chart.setLegendVisible(false);
+        
+        
+        
+        
         resultsVBox.getChildren().add(chart);
+        
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
@@ -557,15 +584,22 @@ public class GUI extends Application {
       try {
         ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
         
+        double myTotal = 0;
         
         // get inputs from the text field
         String[] inputResults = avgAllFarmsTF.getText().split(",");
         for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1]));
+           myTotal = myTotal + dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
+        }
+        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data((dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  " + Math.round(dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100 /myTotal)).toString() + "%", dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100/myTotal));
         }
         
+        
         final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Average of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1));
+        chart.setTitle("Average of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1) +  " in year: " + (inputResults[1]));
+        chart.setLegendVisible(false);
+        
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
@@ -573,10 +607,7 @@ public class GUI extends Application {
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren().add(chart);
         // get all of the farms and print out their maximums for the month
-        List<Farm> list = dataManager.getCheeseFactory().getFarmList();
-        for (int i = 0; i < list.size(); ++i)
-          resultsVBox.getChildren().add(createLabel("Farm: " + list.get(i).getFarmID() + ": " + "",
-              "Times New Roman", FontWeight.BOLD, 15));
+       
 
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
@@ -603,6 +634,24 @@ public class GUI extends Application {
 
 
 
+        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+        System.out.println(dataManager.percentageVectorMonthForFarm("Farm 6", 2019)[2]);
+        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + " " 
+                          + Math.round(dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), 
+                           Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100) + "%" , 
+                          dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1]));
+         // pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), 
+         //                  dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0])])); 
+        
+        }
+        
+        
+        final PieChart chart = new PieChart(pieChartData);        
+        chart.setLegendVisible(false);
+        
+        resultsVBox.getChildren().add(chart);
+        
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
@@ -626,7 +675,16 @@ public class GUI extends Application {
                 "Results for Percentage of Total Weight for Year: " + pctgYear.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
-
+        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + " " + Math.round(dataManager.percentageYearForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults)) * 100) + "%" , dataManager.percentageYearForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults))));
+        }
+        
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Average of all farms during in year: " + (inputResults));
+        chart.setLegendVisible(false);
+        
+        resultsVBox.getChildren().add(chart);
 
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
