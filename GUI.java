@@ -253,8 +253,10 @@ public class GUI extends Application {
     outputTypes.getChildren().add(createLabel("Output Types", "Chalkduster", FontWeight.BOLD, 20));
     outputTypes.getChildren()
         .add(createLabel("Farm Report", "Times New Roman", FontWeight.BOLD, 15));
+    outputTypes.getChildren()
+    .add(createLabel("Enter format: Farm ID,Year,Path", "Times New Roman", FontWeight.BOLD, 10));
     TextField farmReportOutput = new TextField(
-        "Farm ID,Year,Path e.g. Farm 2,2018,C:\\Test.txt no spaces please, separate with a comma");
+        "e.g. Farm 2,2018,C:\\Test.txt:");
     outputTypes.getChildren().add(farmReportOutput);
     // outputTypes.getChildren().add(new TextField("Farm ID, Year e.g. 02, 2019"));
     // outputTypes.getChildren().add(
@@ -315,19 +317,27 @@ public class GUI extends Application {
       }
     });
 
-
+    //output for Farm Report
     farmReportOutput.setOnAction(e -> {
-
-      String thisFarmID =
-          farmReportOutput.getText().substring(0, farmReportOutput.getText().indexOf(","));
-      String newString =
-          farmReportOutput.getText().substring(farmReportOutput.getText().indexOf(",") + 1);
-      int thisYear = Integer.valueOf(newString.substring(0, newString.indexOf(",")));
-      String filePath = newString.substring(newString.indexOf(",") + 1);
-      dataManager.writeFarmReport(thisFarmID, thisYear, filePath);
+      try {
+        String thisFarmID =
+            farmReportOutput.getText().substring(0, farmReportOutput.getText().indexOf(","));
+        String newString =
+            farmReportOutput.getText().substring(farmReportOutput.getText().indexOf(",") + 1);
+        int thisYear = Integer.valueOf(newString.substring(0, newString.indexOf(",")));
+        String filePath = newString.substring(newString.indexOf(",") + 1);
+        dataManager.writeFarmReport(thisFarmID, thisYear, filePath);
+      }catch(NumberFormatException exception) {
+        Alert alert = new Alert(AlertType.ERROR, "Please enter the year as a number.");
+        alert.showAndWait();
+      }catch(IOException exception) {
+        Alert alert = new Alert(AlertType.ERROR, "File path is not a valid path.");
+        alert.showAndWait();
+      }catch(StringIndexOutOfBoundsException exception) {
+        Alert alert = new Alert(AlertType.ERROR, "File path is not a valid path.");
+        alert.showAndWait();
+      }
     });
-
-    // ArrayIndexOutOfBoundsException | NumberFormatException e
 
 
     // box to display resutls in
@@ -396,7 +406,7 @@ public class GUI extends Application {
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
-            .add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText(),
+            .add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText() + ":",
                 "Chalkduster", FontWeight.BOLD, 25));
 
        //Setup pie chart
@@ -424,7 +434,7 @@ public class GUI extends Application {
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
-      } catch (ArrayIndexOutOfBoundsException e) {
+      } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
         // wrong format was entered
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
         alert.showAndWait();
@@ -441,7 +451,7 @@ public class GUI extends Application {
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
-            .add(createLabel("Results for Minimum Weights for " + minMonthTF.getText() + ":",
+            .add(createLabel("Results for Minimum Weights for " + minMonthTF.getText() + ":\n\n",
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren()
             .add(createLabel("          January Minimum Weight: " + minimums[0], "Times New Roman", FontWeight.BOLD, 20));
@@ -484,11 +494,6 @@ public class GUI extends Application {
     minAllFarmsTF.setOnAction(event -> {
       // page for min for all farms for a month
       try {
-
-
-
-
-
         // get inputs from the text field
         String[] inputResults = minAllFarmsTF.getText().split(",");
         // clear the screen and print the results
@@ -523,7 +528,7 @@ public class GUI extends Application {
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
-      } catch (ArrayIndexOutOfBoundsException e) {
+      } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
         // wrong format was entered
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
         alert.showAndWait();
@@ -539,7 +544,7 @@ public class GUI extends Application {
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
-            .add(createLabel("Results for Average Weights for " + avgMonthTF.getText() + ":",
+            .add(createLabel("Results for Average Weights for " + avgMonthTF.getText() + ":\n\n",
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren()
             .add(createLabel("          January Avgerage Weight: " + df.format(averages[0]), "Times New Roman", FontWeight.BOLD, 20));
@@ -613,7 +618,7 @@ public class GUI extends Application {
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
-      } catch (ArrayIndexOutOfBoundsException e) {
+      } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
         // wrong format was entered
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
         alert.showAndWait();
@@ -629,7 +634,7 @@ public class GUI extends Application {
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
             .add(createLabel(
-                "Results for Percentage of Total Weight for Month: " + pctgMonth.getText(),
+                "Results for Percentage of Total Weight for Month: \n\n" + pctgMonth.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
 
@@ -656,7 +661,7 @@ public class GUI extends Application {
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
-      } catch (ArrayIndexOutOfBoundsException e) {
+      } catch (ArrayIndexOutOfBoundsException | NumberFormatException | NullPointerException e) {
         // wrong format was entered
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Month Number,Year\"");
         alert.showAndWait();
@@ -668,11 +673,15 @@ public class GUI extends Application {
       try {
         // get inputs from the text field
         String inputResults = pctgYear.getText();
+        if(inputResults.equals(""))
+          throw new NumberFormatException();
+        //test if the input is valid
+        int test = Integer.parseInt(inputResults);
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
             .add(createLabel(
-                "Results for Percentage of Total Weight for Year: " + pctgYear.getText(),
+                "Results for Percentage of Total Weight for Year: \n\n" + pctgYear.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
         ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
@@ -690,7 +699,7 @@ public class GUI extends Application {
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
-      } catch (ArrayIndexOutOfBoundsException e) {
+      } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
         // wrong format was entered
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"Year\"");
         alert.showAndWait();
