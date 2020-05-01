@@ -1,3 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////
+// Title: DataManager.java
+// Files: CheeseFactory.java, Farm.java, FileManager.java, GUI.java
+//        
+// Course: CS 400, SP2020
+//
+// Authors: Adam Pryor        Matt McNaught		  Zhiyuan Lei
+// Email:   adpryor@wisc.edu  mmcnaught@wisc.edu  zlei23@wisc.edu
+// Lecturer's Name: Debra Deppeler
+//
+/////////////////////////// OTHER SOURCES OF HELP //////////////////////////////
+// None
+////////////////////////////////////////////////////////////////////////////////
+
 package application;
 
 import java.io.FileWriter;
@@ -5,6 +19,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * This class is a data manager that initializes data of cheese factory and
+ * returns desired data upon requests.
+ */
 public class DataManager {
 
 	/**
@@ -55,7 +73,7 @@ public class DataManager {
 	}
 
 ////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////File I-O//////////////////////////////////////////
+///////////////////////////////File I-O/////////////////////////////////////////
 	/**
 	 * Initialize cheese factory using the input file.
 	 * 
@@ -255,7 +273,7 @@ public class DataManager {
 	}
 
 	/**
-	 * Return the minimum monthly amount produced by the farm during the year.
+	 * Return the minimum daily amount for each month during the year.
 	 * 
 	 * @param farmID
 	 * @param year
@@ -267,7 +285,7 @@ public class DataManager {
 	}
 
 	/**
-	 * Return the maximum monthly amount produced by the farm during the year.
+	 * Return the maximum daily amount for each month during the year.
 	 * 
 	 * @param farmID
 	 * @param year
