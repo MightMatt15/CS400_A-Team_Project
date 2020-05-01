@@ -16,20 +16,39 @@ package application;
 
 import java.util.ArrayList;
 
+
+/*
+ * This class holds all of the Farms for the program and helps call operations
+ * on the correct Farm
+ */
 public class CheeseFactory {
 
+  //the list of Farms for the program
   private ArrayList<Farm> milkDataFromFarms;
+  //list of years that have data
   private ArrayList<Integer> yearList;
 
+  
+  //constructors
   public CheeseFactory() {
     milkDataFromFarms = new ArrayList<Farm>();
     yearList = new ArrayList<Integer>();
   }
 
+  /*
+   * Returns the list of farms
+   *
+   * @return a list of Farms 
+   */
   public ArrayList<Farm> getFarmList() {
     return milkDataFromFarms;
   }
 
+  /*
+   * Returns the sum of all weights for all farms in a year
+   * 
+   * @return returns the sum of all weights for all farms in a year
+   */
   public int annualSumAllFarms(int year) {
     int annualSum = 0;
     for (Farm f : milkDataFromFarms) {
@@ -59,6 +78,11 @@ public class CheeseFactory {
       yearList.add(year);
   }
 
+  /*
+   * Returns the list of years
+   *
+   * @return a list of years 
+   */
   public ArrayList<Integer> getYearList() {
     return yearList;
   }

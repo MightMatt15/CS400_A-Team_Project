@@ -20,12 +20,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+ * This class manages the file reading and writing
+ */
 public class FileManager {
 
   public String inputFile;
   public String outputFile;
 
 
+  /*
+   * This method reads an input file and parses and stores the data in Farms in the CheeseFactory
+   * 
+   * @param inputFile the file to be read
+   * @param myFactory the cheese factory that stores all of the farms
+   * 
+   */
   public boolean readFile(String inputFile, CheeseFactory myFactory) throws IOException {
     File file = null;
     file = new File(inputFile);
@@ -110,14 +120,4 @@ public class FileManager {
 
   }
 
-  public boolean writeToFile(String farmID, int year, CheeseFactory factory) {
-
-
-    return false;
-  }
-
-  public String getFileContents() {
-
-    return null;
-  }
 }

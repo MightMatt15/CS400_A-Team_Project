@@ -348,7 +348,7 @@ public class GUI extends Application {
         int thisYear = Integer.valueOf(newString.substring(0, newString.indexOf(",")));
         String filePath = newString.substring(newString.indexOf(",") + 1);
         dataManager.writeFarmReport(thisFarmID, thisYear, filePath);
-        Alert alert = new Alert(AlertType.INFORMATION, "The file has been loaded to " + filePath.substring(inputTextField.getText().lastIndexOf('\\')));
+        Alert alert = new Alert(AlertType.INFORMATION, "The file has been loaded to " + filePath.substring(filePath.lastIndexOf('\\')));
         alert.showAndWait();
       }catch(NumberFormatException exception) {
         Alert alert = new Alert(AlertType.ERROR, "Please enter the year as a number.");
