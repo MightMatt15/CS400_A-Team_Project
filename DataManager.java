@@ -91,28 +91,25 @@ public class DataManager {
 	 * @param farmID farm identifier
 	 * @param year   year
 	 * @param path   output file path
+	 * @throws IOException if the file path is incorrect
 	 */
-	public void writeFarmReport(String farmID, int year, String path) {
-		try {
-			FileWriter writer1 = new FileWriter(path);
-			PrintWriter writer = new PrintWriter(writer1);
-			for (int i = 0; i < farmMonthlyReport(year).length; i++) {
-
+	public void writeFarmReport(String farmID, int year, String path) throws IOException {
+		FileWriter writer1 = new FileWriter(path);
+		PrintWriter writer = new PrintWriter(writer1);
+		for (int i = 0; i < farmMonthlyReport(year).length; i++) {
 				if (farmMonthlyReport(year)[i].farmID.equals(farmID)) {
-					for (int j = 0; j < farmMonthlyReport(
-							year)[i].monthlyReport.length; j++) {
+				for (int j = 0; j < farmMonthlyReport(
+						year)[i].monthlyReport.length; j++) {
 						writer.println("Month " + (j + 1) + " Weight: "
-								+ farmMonthlyReport(year)[i].monthlyReport[j]
-								+ " Percent of total milk for month: "
-								+ percentageVectorMonthForFarm(farmID, year)[j] * 100
-								+ "%");
-					}
+						+ farmMonthlyReport(year)[i].monthlyReport[j]
+							+ " Percent of total milk for month: "
+							+ percentageVectorMonthForFarm(farmID, year)[j] * 100
+							+ "%");
 				}
 			}
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		writer.close();
+		
 	}
 ///////////////////////////////File I-O//////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
