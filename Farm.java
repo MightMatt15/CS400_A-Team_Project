@@ -80,6 +80,12 @@ public class Farm {
       updateMaxMinDays(month, annualData[month - 1][day - 1]);
     }
 
+    /**
+     * Helper method to update the max and min days
+     * 
+     * @param month in question
+     * @param weight in question
+     */
     private void updateMaxMinDays(int month, int weight) {
       if (weight > maxDays[month - 1])
         maxDays[month - 1] = weight;
