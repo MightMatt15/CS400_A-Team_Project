@@ -7,7 +7,7 @@ Semester: Spring 2020
 Project name: Milk Weight
 Team Members:
 1. Adam Pryor, Lec 1, adpryor@wisc.edu
-2. Matt McNaught, Lec 1,
+2. Matt McNaught, Lec 1, mmcnaught@wisc.edu
 3. Zhiyuan Lei, Lec 1, zlei23@wisc.edu
 
 Which team members were on same xteam together?
