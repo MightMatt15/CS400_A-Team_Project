@@ -487,6 +487,7 @@ public class GUI extends Application {
           }
           });
         
+        
         avgAllFarmsTF.setOnAction(event -> {
           //page for avg 
           try {
