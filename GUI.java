@@ -327,7 +327,7 @@ public class GUI extends Application {
             }
         });
 
-        
+        //output the information for a farm to a file
         farmReportOutput.setOnAction(e -> {
             
           String thisFarmID = farmReportOutput.getText().substring(0, farmReportOutput.getText().indexOf(","));
@@ -348,7 +348,7 @@ public class GUI extends Application {
         
         //results
         maxMonthTF.setOnAction(event -> {
-          //page for max in a month
+          //page for max in a month for a farm
           try {
             //get inputs from the text field
             String[] inputResults = maxMonthTF.getText().split(",");
