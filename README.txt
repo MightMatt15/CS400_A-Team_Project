@@ -14,5 +14,7 @@ Which team members were on same xteam together?
 	Matt McNaught & Adam Pryor x-team 166
 Other notes or comments to the grader:
 	Button in bottom right goes to the page for options for outputting to a file
+	Button in left goes to input
 
 Bugs: no known bugs
+Unimplemented Features: Annnual Report, Monthly Report, Date Range Report
