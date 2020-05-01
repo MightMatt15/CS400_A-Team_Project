@@ -4,7 +4,7 @@
 //        
 // Course: CS 400, SP2020
 //
-// Authors: Adam Pryor        Matt McNaught		  Zhiyuan Lei
+// Authors: Adam Pryor        Matt McNaught		    Zhiyuan Lei
 // Email:   adpryor@wisc.edu  mmcnaught@wisc.edu  zlei23@wisc.edu
 // Lecturer's Name: Debra Deppeler
 //
@@ -50,19 +50,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-///////////////////////////////////////////////////////////////////////////////
-//Title: GUI.java
-//Files: CheeseFactory.java, DataManager.java, Farm.java, GUI.java
-//
-//Course: CS 400, SP2020
-//
-//Authors: Adam Pryor Matt McNaught Zhiyuan Lei
-//Email: adpryor@wisc.edu mmcnaught@wisc.edu zlei23@wisc.edu
-//Lecturer's Name: Debra Deppeler
-//
-/////////////////////////// OTHER SOURCES OF HELP //////////////////////////////
-//None
-////////////////////////////////////////////////////////////////////////////////
 
 /*
  * This class runs and manages a GUI for a program that reads Milk Weight data, 
@@ -467,13 +454,10 @@ public class GUI extends Application {
                   / myTotal));
         }
 
-
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Maximum of all farms during month: "
             + (Integer.valueOf(inputResults[0]) - 1) + " in year: " + (inputResults[1]));
         chart.setLegendVisible(false);
-
-
 
         resultsVBox.getChildren().add(chart);
         // change the scene to the results scene
