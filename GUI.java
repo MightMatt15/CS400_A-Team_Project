@@ -1,3 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////
+// Title: GUI.java
+// Files: CheeseFactory.java, DataManager.java, farm.java, FileManager.java
+//        
+// Course: CS 400, SP2020
+//
+// Authors: Adam Pryor        Matt McNaught		  Zhiyuan Lei
+// Email:   adpryor@wisc.edu  mmcnaught@wisc.edu  zlei23@wisc.edu
+// Lecturer's Name: Debra Deppeler
+//
+/////////////////////////// OTHER SOURCES OF HELP //////////////////////////////
+// None
+////////////////////////////////////////////////////////////////////////////////
+
 package application;
 
 import java.io.FileInputStream;
