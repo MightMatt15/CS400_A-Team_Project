@@ -202,6 +202,42 @@ public class DataManager {
 	}
 
 	/**
+	 * Return the maximum daily production of each month for the farm and year
+	 * specified.
+	 * 
+	 * @param farmID farm identifier
+	 * @param year   year
+	 * @return a vector of length 12 representing maximum daily production of each
+	 *         month
+	 */
+	public int[] getMaxDaysForFarm(String farmID, int year) {
+		Farm farm = factory.getFarm(farmID);
+		int[] maxDays = farm.getMaxDays(year);
+		for (int i = 0; i < 12; i++)
+			if (maxDays[i] == -1)
+				maxDays[i] = 0;
+		return maxDays;
+	}
+
+	/**
+	 * Return the minimum daily production of each month for the farm and year
+	 * specified.
+	 * 
+	 * @param farmID farm identifier
+	 * @param year   year
+	 * @return a vector of length 12 representing minimum daily production of each
+	 *         month
+	 */
+	public int[] getMinDaysForFarm(String farmID, int year) {
+		Farm farm = factory.getFarm(farmID);
+		int[] minDays = farm.getMinDays(year);
+		for (int i = 0; i < 12; i++)
+			if (minDays[i] == Integer.MAX_VALUE)
+				minDays[i] = 0;
+		return minDays;
+	}
+
+	/**
 	 * Return the monthly report(monthly sum) of a farm in the give year.
 	 * 
 	 * @param farmID farm identifier
