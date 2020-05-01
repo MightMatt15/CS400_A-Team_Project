@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class stores the milk weight data of a farm and manages users' requests
@@ -32,6 +33,8 @@ public class Farm {
 		private int[][] annualData; // 2-d array (12, 31) to representing the data of the
 									// year
 		private int[] monthlyData; // some of weight of each month during the year
+		private int[] maxDays;
+		private int[] minDays;
 
 		/**
 		 * Constructor
@@ -40,6 +43,10 @@ public class Farm {
 			this.year = year;
 			annualData = new int[12][31];
 			monthlyData = new int[12];
+			maxDays = new int[12];
+			Arrays.fill(maxDays, -1);
+			minDays = new int[12];
+			Arrays.fill(minDays, Integer.MAX_VALUE);
 		}
 
 		/**
@@ -53,6 +60,14 @@ public class Farm {
 			annualData[month - 1][day - 1] += weight;
 			annualSum += weight;
 			monthlyData[month - 1] += weight;
+			updateMaxMinDays(month, annualData[month - 1][day - 1]);
+		}
+
+		private void updateMaxMinDays(int month, int weight) {
+			if (weight > maxDays[month - 1])
+				maxDays[month - 1] = weight;
+			if (weight < minDays[month - 1])
+				minDays[month - 1] = weight;
 		}
 
 		/**
@@ -67,6 +82,7 @@ public class Farm {
 			annualData[month - 1][day - 1] = weight;
 			annualSum += (weight - originalWeight);
 			monthlyData[month - 1] += (weight - originalWeight);
+			updateMaxMinDays(month, weight);
 		}
 
 		private double getAnnualAverage(int year) {
@@ -167,8 +183,10 @@ public class Farm {
 			annualSum = 0;
 			annualData = new int[12][31];
 			monthlyData = new int[12];
+			maxDays = new int[12];
+			minDays = new int[12];
 		}
-	}
+	} // end of class annualData
 
 	/**
 	 * Inserts data for milk on a specific date given that all arguments are valid.
@@ -407,7 +425,7 @@ public class Farm {
 		if (yearReport != null) {
 			double[] monthlyAvg = new double[12];
 			for (int i = 1; i <= 12; i++) {
-				monthlyAvg[i-1] = yearReport.getMonthlyAverage(i);
+				monthlyAvg[i - 1] = yearReport.getMonthlyAverage(i);
 			}
 			return monthlyAvg;
 		}
@@ -443,4 +461,21 @@ public class Farm {
 			return yearReport.getData(month, day);
 		return 0;
 	}
+
+	public int[] getMaxDays(int year) {
+		annualData yearReport = yearExists(year);
+		if (yearReport != null)
+			return yearReport.maxDays;
+		else
+			return new int[12];
+	}
+
+	public int[] getMinDays(int year) {
+		annualData yearReport = yearExists(year);
+		if (yearReport != null)
+			return yearReport.minDays;
+		else
+			return new int[12];
+	}
+
 }
