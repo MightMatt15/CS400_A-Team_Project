@@ -424,7 +424,10 @@ public class GUI extends Application {
                       dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
                       Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
                       / myTotal)).toString()
-                  + "%",
+                  + "% Max: "
+                  + dataManager.getMaxDaysForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1],
               dataManager.getMaxDaysForFarm(
                   dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
                   Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
@@ -540,7 +543,10 @@ public class GUI extends Application {
                       dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
                       Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
                       / myTotal)).toString()
-                  + "%",
+                  + "% Min: "
+                  + dataManager.getMinDaysForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1],
               dataManager.getMinDaysForFarm(
                   dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
                   Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
