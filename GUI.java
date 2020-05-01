@@ -36,7 +36,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+///////////////////////////////////////////////////////////////////////////////
+//Title: GUI.java
+//Files: CheeseFactory.java, DataManager.java, Farm.java, GUI.java
+//
+//Course: CS 400, SP2020
+//
+//Authors: Adam Pryor Matt McNaught Zhiyuan Lei
+//Email: adpryor@wisc.edu mmcnaught@wisc.edu zlei23@wisc.edu
+//Lecturer's Name: Debra Deppeler
+//
+/////////////////////////// OTHER SOURCES OF HELP //////////////////////////////
+//None
+////////////////////////////////////////////////////////////////////////////////
 
+/*
+ * This class runs and manages a GUI for a program that reads Milk Weight data, 
+ * manages it, and displays
+ */
 public class GUI extends Application {
   // store any command-line arguments that were entered.
   // NOTE: this.getParameters().getRaw() will get these also
@@ -258,17 +275,6 @@ public class GUI extends Application {
     TextField farmReportOutput = new TextField(
         "e.g. Farm 2,2018,C:\\Test.txt:");
     outputTypes.getChildren().add(farmReportOutput);
-    // outputTypes.getChildren().add(new TextField("Farm ID, Year e.g. 02, 2019"));
-    // outputTypes.getChildren().add(
-    // createLabel("Annual Report", "Times New Roman", FontWeight.BOLD, 15));
-    // outputTypes.getChildren().add(new TextField("Year e.g. 2019"));
-    // outputTypes.getChildren().add(
-    // createLabel("Monthly Report", "Times New Roman", FontWeight.BOLD, 15));
-    // outputTypes.getChildren().add(new TextField("Year, Month e.g. 2019, 2"));
-    // outputTypes.getChildren().add(
-    // createLabel("Date Range Report", "Times New Roman", FontWeight.BOLD, 15));
-    // outputTypes.getChildren()
-    // .add(new TextField("Start date, End Date: year,month,day, month,day"));
     panel2.setCenter(outputTypes);
     BorderPane.setAlignment(panel2, Pos.CENTER);
 
@@ -276,6 +282,7 @@ public class GUI extends Application {
     Scene secondaryScene = new Scene(panel2, WINDOW_WIDTH, WINDOW_HEIGHT);
     // page for inputs
     Scene inputScene = new Scene(panel3, WINDOW_WIDTH, WINDOW_HEIGHT);
+    
     // make the buttons switch between scenes
     nextScene.setOnAction(e -> {
       primaryStage.setScene(secondaryScene);
@@ -327,6 +334,8 @@ public class GUI extends Application {
         int thisYear = Integer.valueOf(newString.substring(0, newString.indexOf(",")));
         String filePath = newString.substring(newString.indexOf(",") + 1);
         dataManager.writeFarmReport(thisFarmID, thisYear, filePath);
+        Alert alert = new Alert(AlertType.INFORMATION, "The file has been loaded to " + filePath.substring(inputTextField.getText().lastIndexOf('\\')));
+        alert.showAndWait();
       }catch(NumberFormatException exception) {
         Alert alert = new Alert(AlertType.ERROR, "Please enter the year as a number.");
         alert.showAndWait();
