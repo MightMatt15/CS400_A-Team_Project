@@ -46,7 +46,7 @@ public class GUI extends Application {
   private static final int WINDOW_HEIGHT = 500;
   // manage data provided in files for visualization and manipulation
   DataManager dataManager = new DataManager();
-  //format for all doubles printed
+  // format for all doubles printed
   DecimalFormat df = new DecimalFormat("#.00");
 
   @Override
@@ -342,37 +342,44 @@ public class GUI extends Application {
       try {
         // get inputs from the text field
         String[] inputResults = maxMonthTF.getText().split(",");
-        //maximums for all months
-        int[] maximums = dataManager.getMaxDaysForFarm(inputResults[0], Integer.parseInt(inputResults[1]));
+        // maximums for all months
+        int[] maximums =
+            dataManager.getMaxDaysForFarm(inputResults[0], Integer.parseInt(inputResults[1]));
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
             .add(createLabel("Results for Maximum Weights for " + maxMonthTF.getText() + ":\n\n",
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren()
-            .add(createLabel("          January Maximum Weight: " + maximums[0], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          January Maximum Weight: " + maximums[0], "Times New Roman",
+                FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          February Maximum Weight: " + maximums[1], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          February Maximum Weight: " + maximums[1], "Times New Roman",
+                FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          March Maximum Weight: " + maximums[2],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          April Maximum Weight: " + maximums[3],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          May Maximum Weight: " + maximums[4],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          June Maximum Weight: " + maximums[5],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          July Maximum Weight: " + maximums[6],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          August Maximum Weight: " + maximums[7],
+            "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          March Maximum Weight: " + maximums[2], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          September Maximum Weight: " + maximums[8],
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          April Maximum Weight: " + maximums[3], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          October Maximum Weight: " + maximums[9], "Times New Roman",
+                FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          May Maximum Weight: " + maximums[4], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          November Maximum Weight: " + maximums[10],
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          June Maximum Weight: " + maximums[5], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          July Maximum Weight: " + maximums[6], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          August Maximum Weight: " + maximums[7], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          September Maximum Weight: " + maximums[8], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          October Maximum Weight: " + maximums[9], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          November Maximum Weight: " + maximums[10], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          December Maximum Weight: " + maximums[11], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          December Maximum Weight: " + maximums[11],
+                "Times New Roman", FontWeight.BOLD, 20));
         panelResults.setCenter(resultsVBox);
         BorderPane.setAlignment(resultsVBox, Pos.CENTER);
         primaryStage.setScene(resultsScene);
@@ -381,10 +388,10 @@ public class GUI extends Application {
         // entered format wrong
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"FarmID,Year\"");
         alert.showAndWait();
-      }catch(NullPointerException e) {
+      } catch (NullPointerException e) {
         // entered format wrong
         Alert alert = new Alert(AlertType.ERROR, "Farm does not exist in the data");
-        alert.showAndWait(); 
+        alert.showAndWait();
       }
     });
 
@@ -399,26 +406,39 @@ public class GUI extends Application {
             .add(createLabel("Results for Maximum Weights for " + maxAllFarmsTF.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
-       //Setup pie chart
+        // Setup pie chart
         double myTotal = 0;
 
-        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
-        
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          myTotal = myTotal + dataManager.getMaxDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
-       }
-       for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-         pieChartData.add(new PieChart.Data((dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  " + Math.round(dataManager.getMaxDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100 /myTotal)).toString() + "%", dataManager.getMaxDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100/myTotal));
-       }
-       
-       
-       final PieChart chart = new PieChart(pieChartData);
-       chart.setTitle("Maximum of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1) +  " in year: " + (inputResults[1]));
-       chart.setLegendVisible(false);
-        
-        
-        
-        
+        ObservableList<PieChart.Data> pieChartData =
+            FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          myTotal = myTotal + dataManager.getMaxDaysForFarm(
+              dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+              Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
+        }
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(
+              (dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  "
+                  + Math.round(dataManager.getMaxDaysForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
+                      / myTotal)).toString()
+                  + "%",
+              dataManager.getMaxDaysForFarm(
+                  dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                  Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
+                  / myTotal));
+        }
+
+
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Maximum of all farms during month: "
+            + (Integer.valueOf(inputResults[0]) - 1) + " in year: " + (inputResults[1]));
+        chart.setLegendVisible(false);
+
+
+
         resultsVBox.getChildren().add(chart);
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
@@ -436,37 +456,44 @@ public class GUI extends Application {
       try {
         // get inputs from the text field
         String[] inputResults = minMonthTF.getText().split(",");
-        //minimums for all months
-        int[] minimums = dataManager.getMaxDaysForFarm(inputResults[0], Integer.parseInt(inputResults[1]));
+        // minimums for all months
+        int[] minimums =
+            dataManager.getMaxDaysForFarm(inputResults[0], Integer.parseInt(inputResults[1]));
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
             .add(createLabel("Results for Minimum Weights for " + minMonthTF.getText() + ":",
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren()
-            .add(createLabel("          January Minimum Weight: " + minimums[0], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          January Minimum Weight: " + minimums[0], "Times New Roman",
+                FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          February Minimum Weight: " + minimums[1], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          February Minimum Weight: " + minimums[1], "Times New Roman",
+                FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          March Minimum Weight: " + minimums[2],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          April Minimum Weight: " + minimums[3],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          May Minimum Weight: " + minimums[4],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          June Minimum Weight: " + minimums[5],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          July Minimum Weight: " + minimums[6],
+            "Times New Roman", FontWeight.BOLD, 20));
+        resultsVBox.getChildren().add(createLabel("          August Minimum Weight: " + minimums[7],
+            "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          March Minimum Weight: " + minimums[2], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          September Minimum Weight: " + minimums[8],
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          April Minimum Weight: " + minimums[3], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          October Minimum Weight: " + minimums[9], "Times New Roman",
+                FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          May Minimum Weight: " + minimums[4], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          November Minimum Weight: " + minimums[10],
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          June Minimum Weight: " + minimums[5], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          July Minimum Weight: " + minimums[6], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          August Minimum Weight: " + minimums[7], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          September Minimum Weight: " + minimums[8], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          October Minimum Weight: " + minimums[9], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          November Minimum Weight: " + minimums[10], "Times New Roman", FontWeight.BOLD, 20));
-        resultsVBox.getChildren()
-            .add(createLabel("          December Minimum Weight: " + minimums[11], "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          December Minimum Weight: " + minimums[11],
+                "Times New Roman", FontWeight.BOLD, 20));
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
@@ -474,18 +501,16 @@ public class GUI extends Application {
         // entered format wrong
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"FarmID,Year\"");
         alert.showAndWait();
-      }catch(NullPointerException e) {
+      } catch (NullPointerException e) {
         // entered format wrong
         Alert alert = new Alert(AlertType.ERROR, "Farm does not exist in the data");
-        alert.showAndWait(); 
+        alert.showAndWait();
       }
     });
 
     minAllFarmsTF.setOnAction(event -> {
       // page for min for all farms for a month
       try {
-
-
 
 
 
@@ -497,28 +522,41 @@ public class GUI extends Application {
             .add(createLabel("Results for Minimum Weights for " + minAllFarmsTF.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
-        //Setup pie chart
-      double myTotal = 0;
+        // Setup pie chart
+        double myTotal = 0;
 
-        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
-        
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          myTotal = myTotal + dataManager.getMinDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
-       }
-       for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-         pieChartData.add(new PieChart.Data((dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  " + Math.round(dataManager.getMinDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100 /myTotal)).toString() + "%", dataManager.getMinDaysForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100/myTotal));
-       }
-       
-       
-       final PieChart chart = new PieChart(pieChartData);
-       chart.setTitle("Minimum of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1) +  " in year: " + (inputResults[1]));
-       chart.setLegendVisible(false);
-        
-        
-        
-        
+        ObservableList<PieChart.Data> pieChartData =
+            FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          myTotal = myTotal + dataManager.getMinDaysForFarm(
+              dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+              Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
+        }
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(
+              (dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  "
+                  + Math.round(dataManager.getMinDaysForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
+                      / myTotal)).toString()
+                  + "%",
+              dataManager.getMinDaysForFarm(
+                  dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                  Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
+                  / myTotal));
+        }
+
+
+        final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Minimum of all farms during month: "
+            + (Integer.valueOf(inputResults[0]) - 1) + " in year: " + (inputResults[1]));
+        chart.setLegendVisible(false);
+
+
+
         resultsVBox.getChildren().add(chart);
-        
+
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
@@ -535,36 +573,49 @@ public class GUI extends Application {
       try {
         // get inputs from the text field
         String[] inputResults = avgMonthTF.getText().split(",");
-        double[] averages = dataManager.getMonthlyAverageForFarm(inputResults[0], Integer.parseInt(inputResults[1]));
+        double[] averages = dataManager.getMonthlyAverageForFarm(inputResults[0],
+            Integer.parseInt(inputResults[1]));
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
             .add(createLabel("Results for Average Weights for " + avgMonthTF.getText() + ":",
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren()
-            .add(createLabel("          January Avgerage Weight: " + df.format(averages[0]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          January Avgerage Weight: " + df.format(averages[0]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          February Avgerage Weight: " + df.format(averages[1]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          February Avgerage Weight: " + df.format(averages[1]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          March Avgerage Weight: " + df.format(averages[2]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          March Avgerage Weight: " + df.format(averages[2]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          April Avgerage Weight: " + df.format(averages[3]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          April Avgerage Weight: " + df.format(averages[3]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          May Avgerage Weight: " + df.format(averages[4]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          May Avgerage Weight: " + df.format(averages[4]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          June Avgerage Weight: " + df.format(averages[5]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          June Avgerage Weight: " + df.format(averages[5]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          July Avgerage Weight: " + df.format(averages[6]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          July Avgerage Weight: " + df.format(averages[6]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          August Avgerage Weight: " + df.format(averages[7]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          August Avgerage Weight: " + df.format(averages[7]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          September Avgerage Weight: " + df.format(averages[8]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          September Avgerage Weight: " + df.format(averages[8]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          October Avgerage Weight: " + df.format(averages[9]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          October Avgerage Weight: " + df.format(averages[9]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          November Avgerage Weight: " + df.format(averages[10]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          November Avgerage Weight: " + df.format(averages[10]),
+                "Times New Roman", FontWeight.BOLD, 20));
         resultsVBox.getChildren()
-            .add(createLabel("          December Avgerage Weight: " + df.format(averages[11]), "Times New Roman", FontWeight.BOLD, 20));
+            .add(createLabel("          December Avgerage Weight: " + df.format(averages[11]),
+                "Times New Roman", FontWeight.BOLD, 20));
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
         primaryStage.show();
@@ -572,34 +623,48 @@ public class GUI extends Application {
         // entered format wrong
         Alert alert = new Alert(AlertType.ERROR, "Please Enter as \"FarmID,Year\"");
         alert.showAndWait();
-      }catch(NullPointerException e) {
+      } catch (NullPointerException e) {
         // entered format wrong
         Alert alert = new Alert(AlertType.ERROR, "Farm does not exist in the data");
-        alert.showAndWait(); 
+        alert.showAndWait();
       }
     });
 
     avgAllFarmsTF.setOnAction(event -> {
       // page for avg
       try {
-        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
-        
+        ObservableList<PieChart.Data> pieChartData =
+            FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+
         double myTotal = 0;
-        
+
         // get inputs from the text field
         String[] inputResults = avgAllFarmsTF.getText().split(",");
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-           myTotal = myTotal + dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          myTotal = myTotal + dataManager.getMonthlyAverageForFarm(
+              dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+              Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1];
         }
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          pieChartData.add(new PieChart.Data((dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  " + Math.round(dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100 /myTotal)).toString() + "%", dataManager.getMonthlyAverageForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100/myTotal));
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(
+              (dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + "  "
+                  + Math.round(dataManager.getMonthlyAverageForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
+                      / myTotal)).toString()
+                  + "%",
+              dataManager.getMonthlyAverageForFarm(
+                  dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                  Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100
+                  / myTotal));
         }
-        
-        
+
+
         final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Average of all farms during month: " + (Integer.valueOf(inputResults[0]) - 1) +  " in year: " + (inputResults[1]));
+        chart.setTitle("Average of all farms during month: "
+            + (Integer.valueOf(inputResults[0]) - 1) + " in year: " + (inputResults[1]));
         chart.setLegendVisible(false);
-        
+
         // clear the screen and print the results
         resultsVBox.getChildren().removeAll(resultsVBox.getChildren());
         resultsVBox.getChildren()
@@ -607,7 +672,7 @@ public class GUI extends Application {
                 "Chalkduster", FontWeight.BOLD, 25));
         resultsVBox.getChildren().add(chart);
         // get all of the farms and print out their maximums for the month
-       
+
 
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
@@ -634,24 +699,31 @@ public class GUI extends Application {
 
 
 
-        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
-        System.out.println(dataManager.percentageVectorMonthForFarm("Farm 6", 2019)[2]);
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + " " 
-                          + Math.round(dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), 
-                           Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100) + "%" , 
-                          dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1]));
-         // pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), 
-         //                  dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0])])); 
-        
+        ObservableList<PieChart.Data> pieChartData =
+            FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(
+              dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + " "
+                  + Math.round(dataManager.percentageVectorMonthForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1] * 100)
+                  + "%",
+              dataManager.percentageVectorMonthForFarm(
+                  dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                  Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0]) - 1]));
+          // pieChartData.add(new
+          // PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+          // dataManager.percentageVectorMonthForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+          // Integer.valueOf(inputResults[1]))[Integer.valueOf(inputResults[0])]));
+
         }
-        
-        
-        final PieChart chart = new PieChart(pieChartData);        
+
+
+        final PieChart chart = new PieChart(pieChartData);
         chart.setLegendVisible(false);
-        
+
         resultsVBox.getChildren().add(chart);
-        
+
         // change the scene to the results scene
         panelResults.setCenter(resultsVBox);
         primaryStage.setScene(resultsScene);
@@ -675,15 +747,24 @@ public class GUI extends Application {
                 "Results for Percentage of Total Weight for Year: " + pctgYear.getText(),
                 "Chalkduster", FontWeight.BOLD, 25));
 
-        ObservableList<PieChart.Data> pieChartData =  FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
-        for(int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
-          pieChartData.add(new PieChart.Data(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + " " + Math.round(dataManager.percentageYearForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults)) * 100) + "%" , dataManager.percentageYearForFarm(dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(), Integer.valueOf(inputResults))));
+        ObservableList<PieChart.Data> pieChartData =
+            FXCollections.observableArrayList(new ArrayList<PieChart.Data>());
+        for (int i = 0; i < dataManager.getCheeseFactory().getFarmList().size(); i++) {
+          pieChartData.add(new PieChart.Data(
+              dataManager.getCheeseFactory().getFarmList().get(i).getFarmID() + " "
+                  + Math.round(dataManager.percentageYearForFarm(
+                      dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                      Integer.valueOf(inputResults)) * 100)
+                  + "%",
+              dataManager.percentageYearForFarm(
+                  dataManager.getCheeseFactory().getFarmList().get(i).getFarmID(),
+                  Integer.valueOf(inputResults))));
         }
-        
+
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Average of all farms during in year: " + (inputResults));
         chart.setLegendVisible(false);
-        
+
         resultsVBox.getChildren().add(chart);
 
         // change the scene to the results scene
